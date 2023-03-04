@@ -1,0 +1,21 @@
+# LeapAheadX
+
+## Development
+
+Update your local database connection in `application.yml` or create your own `application-local.yml` file to override settings for development.
+
+After starting the application it is accessible under `localhost:8080`.
+
+## Build
+
+The application can be built using the following command:
+
+```
+mvnw clean package
+```
+
+## Further readings
+
+* [Maven docs](https://maven.apache.org/guides/index.html)  
+* [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
+* [Spring Data JPA reference](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)  
