@@ -5,6 +5,7 @@ import com.oop.leap_ahead_x.dto.UserDTO;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,27 +30,27 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> get(final Long uId) {
+    public Optional<UserDTO> get(final UUID uId) {
         return userRepository.findById(uId)
                 .map(user -> mapToDTO(user, new UserDTO()));
     }
-//
-//    public Long create(final UserDTO userDTO) {
-//        final User user = new User();
-//        mapToEntity(userDTO, user);
-//        return userRepository.save(user).getUId();
-//    }
-//
-//    public void update(final Long uId, final UserDTO userDTO) {
-//        final User user = userRepository.findById(uId)
-//                .orElseThrow();
-//        mapToEntity(userDTO, user);
-//        userRepository.save(user);
-//    }
-//
-//    public void delete(final Long uId) {
-//        userRepository.deleteById(uId);
-//    }
+
+    public UUID create(final UserDTO userDTO) {
+        final User user = new User();
+        mapToEntity(userDTO, user);
+        return userRepository.save(user).getUId();
+    }
+
+  public void update(final UUID uId, final UserDTO userDTO) {
+        final User user = userRepository.findById(uId)
+                .orElseThrow();
+        mapToEntity(userDTO, user);
+        userRepository.save(user);
+    }
+
+    public void delete(final UUID uId) {
+        userRepository.deleteById(uId);
+    }
 
     // Maps the user information into the DTO format, Removing any unwanted data from getting shown
     private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
@@ -60,11 +61,11 @@ public class UserService {
         return userDTO;
     }
 
-//    private User mapToEntity(final UserDTO userDTO, final User user) {
-//        user.setEmail(userDTO.getEmail());
-//        user.setPassword(userDTO.getPassword());
-//        user.setRole(userDTO.getRole());
-//        return user;
-//    }
+    private User mapToEntity(final UserDTO userDTO, final User user) {
+        user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
+        return user;
+    }
 
 }

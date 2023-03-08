@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 
 public class UserDTO {
 
     @JsonProperty("uId")
-    private Long uId;
+    private UUID uId;
 
     @NotNull
     @Size(max = 255)
@@ -23,11 +25,11 @@ public class UserDTO {
     private String role;
 
     // Getters & Setters
-    public Long getUId() {
+    public UUID getUId() {
         return uId;
     }
 
-    public void setUId(final Long uId) {
+    public void setUId(final UUID uId) {
         this.uId = uId;
     }
 
