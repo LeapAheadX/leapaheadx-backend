@@ -4,10 +4,12 @@ import com.oop.leap_ahead_x.dto.UserDTO;
 import com.oop.leap_ahead_x.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -26,11 +28,11 @@ public class UserController {
         return userService.findAll();
     }
 
-//    @GetMapping("/{uId}")
-//    public ResponseEntity<UserDTO> getUser(@PathVariable(name = "uId") final Long uId) {
-//        return ResponseEntity.ok(userService.get(uId));
-//    }
-//
+    @GetMapping("/{uId}")
+    public Optional<UserDTO> getUser(@PathVariable(name = "uId") final Long uId) {
+        return userService.get(uId);
+    }
+
 //    @PostMapping
 //    @ApiResponse(responseCode = "201")
 //    public ResponseEntity<Long> createUser(@RequestBody @Valid final UserDTO userDTO) {

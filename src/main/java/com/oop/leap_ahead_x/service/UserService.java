@@ -4,6 +4,7 @@ import com.oop.leap_ahead_x.domain.User;
 import com.oop.leap_ahead_x.dto.UserDTO;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-//    public UserDTO get(final Long uId) {
-//        return userRepository.findById(uId)
-//                .map(user -> mapToDTO(user, new UserDTO()))
-//                .orElseThrow();
-//    }
+    public Optional<UserDTO> get(final Long uId) {
+        return userRepository.findById(uId)
+                .map(user -> mapToDTO(user, new UserDTO()));
+    }
 //
 //    public Long create(final UserDTO userDTO) {
 //        final User user = new User();
