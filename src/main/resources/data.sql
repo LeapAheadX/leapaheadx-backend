@@ -117,10 +117,10 @@ VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002', '79ebe24e-bd58-11ed-afa1-0242ac1
 INSERT INTO  option_component_link(component_uuid, option_uuid) 
 VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002', '79ebe488-bd58-11ed-afa1-0242ac120002');
 
-INSERT INTO  application(application_uuid, form_uuid, submitted_by, status, date_created, last_updated) 
-VALUES ('79ebf090-bd58-11ed-afa1-0242ac120002', '79ebaf36-bd58-11ed-afa1-0242ac120002', '79ebf338-bd58-11ed-afa1-0242ac120002', 'inProgress', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  application(application_uuid, form_uuid, submitted_by, status, date_created, last_updated) 
-VALUES ('79ebf1ee-bd58-11ed-afa1-0242ac120002', '79ebb09e-bd58-11ed-afa1-0242ac120002', '79ebf338-bd58-11ed-afa1-0242ac120002', 'inProgress', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO  application(application_uuid, form_uuid, submitted_by, status, comment, date_created, last_updated)
+VALUES ('79ebf090-bd58-11ed-afa1-0242ac120002', '79ebaf36-bd58-11ed-afa1-0242ac120002', '79ebf338-bd58-11ed-afa1-0242ac120002', 'inProgress', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO  application(application_uuid, form_uuid, submitted_by, status, comment, date_created, last_updated)
+VALUES ('79ebf1ee-bd58-11ed-afa1-0242ac120002', '79ebb09e-bd58-11ed-afa1-0242ac120002', '79ebf338-bd58-11ed-afa1-0242ac120002', 'inProgress', NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO  application_response_value(application_uuid, component_uuid, value, date_created, last_updated) 
 VALUES ('79ebf090-bd58-11ed-afa1-0242ac120002', '79ebdac4-bd58-11ed-afa1-0242ac120002', 'Jeff', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
