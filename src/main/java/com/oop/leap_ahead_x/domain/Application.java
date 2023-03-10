@@ -31,6 +31,9 @@ public class Application {
     @Column(nullable = false, length = 50)
     private String status;
 
+    @Column(nullable = true, length = 500)
+    private String comment;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "form_uuid", nullable = false)
     private Form formUuid;
@@ -56,6 +59,14 @@ public class Application {
 
     public void setApplicationUuid(final UUID applicationUuid) {
         this.applicationUuid = applicationUuid;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public String getStatus() {
