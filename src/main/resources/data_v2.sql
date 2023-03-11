@@ -1,3 +1,4 @@
+USE leap_ahead_x;
 -- Insertion of Users
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
 VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
