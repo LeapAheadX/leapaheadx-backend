@@ -7,9 +7,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -42,13 +41,8 @@ public class FormStep {
     @JoinColumn(name = "parent_form", nullable = false)
     private FormWorkflow parentForm;
 
-    @ManyToMany
-    @JoinTable(
-            name = "associated_subform",
-            joinColumns = @JoinColumn(name = "step_uuid"),
-            inverseJoinColumns = @JoinColumn(name = "canvas_uuid")
-    )
-    private Set<SubformCanvas> associatedSubformSubformCanvass;
+    @OneToMany(mappedBy = "stepUuid")
+    private Set<AssociatedSubform> stepUuidAssociatedSubforms;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -98,13 +92,13 @@ public class FormStep {
         this.parentForm = parentForm;
     }
 
-    public Set<SubformCanvas> getAssociatedSubformSubformCanvass() {
-        return associatedSubformSubformCanvass;
+    public Set<AssociatedSubform> getStepUuidAssociatedSubforms() {
+        return stepUuidAssociatedSubforms;
     }
 
-    public void setAssociatedSubformSubformCanvass(
-            final Set<SubformCanvas> associatedSubformSubformCanvass) {
-        this.associatedSubformSubformCanvass = associatedSubformSubformCanvass;
+    public void setStepUuidAssociatedSubforms(
+            final Set<AssociatedSubform> stepUuidAssociatedSubforms) {
+        this.stepUuidAssociatedSubforms = stepUuidAssociatedSubforms;
     }
 
     public OffsetDateTime getDateCreated() {

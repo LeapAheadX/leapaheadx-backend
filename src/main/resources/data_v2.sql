@@ -76,33 +76,33 @@ insert into form_step(step_uuid, parent_form, assignee_type, order_no, action, d
 values ('79ebe92e-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','approver','3','Check and Approve',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insertion of associated_subform
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebd34e-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebd34e-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebd8d0-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002');
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebd34e-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002', '1',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebd34e-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002', '2',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebd8d0-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002', '3',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002');
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002', '1',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002', '2',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdac4-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002', '3',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdc72-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdc72-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebdeb6-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002');
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdc72-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002', '3',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdc72-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002', '2',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebdeb6-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002', '1',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002');
-INSERT INTO associated_subform (step_uuid, canvas_uuid)
-VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002');
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002', '2',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002', '3',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO associated_subform (step_uuid, canvas_uuid, position, date_created, last_updated)
+VALUES ('79ebe082-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002', '1',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 INSERT INTO input_component(component_uuid,parent_canvas,question,type,is_required,order_no, date_created, last_updated)
 VALUES ('79ebf1ee-bd58-11ed-afa1-0242ac120002', '79ebce12-bd58-11ed-afa1-0242ac120002', 'Name', 'text', TRUE, '1',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
@@ -156,8 +156,3 @@ INSERT INTO application_response_value (application_uuid, canvas_uuid,component_
 VALUES('79ec0da0-bd58-11ed-afa1-0242ac120002','79ebcfc0-bd58-11ed-afa1-0242ac120002', '79ebf45a-bd58-11ed-afa1-0242ac120002', 'High', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
 INSERT INTO application_response_value (application_uuid, canvas_uuid,component_uuid,value, date_created, last_updated)
 VALUES('79ec0f4e-bd58-11ed-afa1-0242ac120002','79ebd182-bd58-11ed-afa1-0242ac120002', '79ebf608-bd58-11ed-afa1-0242ac120002', 'Male', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
-
-
-
-
-

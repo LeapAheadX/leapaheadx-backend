@@ -7,7 +7,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.time.OffsetDateTime;
@@ -39,8 +38,8 @@ public class SubformCanvas {
     @JoinColumn(name = "created_by", nullable = false)
     private Admin createdBy;
 
-    @ManyToMany(mappedBy = "associatedSubformSubformCanvass")
-    private Set<FormStep> associatedSubformFormSteps;
+    @OneToMany(mappedBy = "canvasUuid")
+    private Set<AssociatedSubform> canvasUuidAssociatedSubforms;
 
     @OneToMany(mappedBy = "parentCanvas")
     private Set<InputComponent> parentCanvasInputComponents;
@@ -88,12 +87,13 @@ public class SubformCanvas {
         this.createdBy = createdBy;
     }
 
-    public Set<FormStep> getAssociatedSubformFormSteps() {
-        return associatedSubformFormSteps;
+    public Set<AssociatedSubform> getCanvasUuidAssociatedSubforms() {
+        return canvasUuidAssociatedSubforms;
     }
 
-    public void setAssociatedSubformFormSteps(final Set<FormStep> associatedSubformFormSteps) {
-        this.associatedSubformFormSteps = associatedSubformFormSteps;
+    public void setCanvasUuidAssociatedSubforms(
+            final Set<AssociatedSubform> canvasUuidAssociatedSubforms) {
+        this.canvasUuidAssociatedSubforms = canvasUuidAssociatedSubforms;
     }
 
     public Set<InputComponent> getParentCanvasInputComponents() {
