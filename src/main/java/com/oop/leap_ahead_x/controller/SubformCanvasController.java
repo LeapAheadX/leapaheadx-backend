@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/subformCanvass", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/subformcanvas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SubformCanvasController {
 
     private final SubformCanvasService subformCanvasService;

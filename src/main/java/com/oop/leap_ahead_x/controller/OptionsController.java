@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/optionss", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/options", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OptionsController {
 
     private final OptionsService optionsService;
