@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/inputComponents", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/inputcomponents", produces = MediaType.APPLICATION_JSON_VALUE)
 public class InputComponentController {
 
     private final InputComponentService inputComponentService;
