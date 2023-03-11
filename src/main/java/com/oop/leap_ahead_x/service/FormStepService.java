@@ -2,35 +2,26 @@ package com.oop.leap_ahead_x.service;
 
 import com.oop.leap_ahead_x.domain.FormStep;
 import com.oop.leap_ahead_x.domain.FormWorkflow;
-import com.oop.leap_ahead_x.domain.SubformCanvas;
 import com.oop.leap_ahead_x.dto.FormStepDTO;
 import com.oop.leap_ahead_x.repos.FormStepRepository;
 import com.oop.leap_ahead_x.repos.FormWorkflowRepository;
-import com.oop.leap_ahead_x.repos.SubformCanvasRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
-import jakarta.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
-@Transactional
 @Service
 public class FormStepService {
 
     private final FormStepRepository formStepRepository;
     private final FormWorkflowRepository formWorkflowRepository;
-    private final SubformCanvasRepository subformCanvasRepository;
 
     public FormStepService(final FormStepRepository formStepRepository,
-            final FormWorkflowRepository formWorkflowRepository,
-            final SubformCanvasRepository subformCanvasRepository) {
+                           final FormWorkflowRepository formWorkflowRepository) {
         this.formStepRepository = formStepRepository;
         this.formWorkflowRepository = formWorkflowRepository;
-        this.subformCanvasRepository = subformCanvasRepository;
     }
 
     public List<FormStepDTO> findAll() {
@@ -69,9 +60,6 @@ public class FormStepService {
         formStepDTO.setOrderNo(formStep.getOrderNo());
         formStepDTO.setAction(formStep.getAction());
         formStepDTO.setParentForm(formStep.getParentForm() == null ? null : formStep.getParentForm().getFormUuid());
-        formStepDTO.setAssociatedSubformSubformCanvass(formStep.getAssociatedSubformSubformCanvass() == null ? null : formStep.getAssociatedSubformSubformCanvass().stream()
-                .map(subformCanvas -> subformCanvas.getCanvasUuid())
-                .toList());
         return formStepDTO;
     }
 
@@ -82,12 +70,6 @@ public class FormStepService {
         final FormWorkflow parentForm = formStepDTO.getParentForm() == null ? null : formWorkflowRepository.findById(formStepDTO.getParentForm())
                 .orElseThrow(() -> new NotFoundException("parentForm not found"));
         formStep.setParentForm(parentForm);
-        final List<SubformCanvas> associatedSubformSubformCanvass = subformCanvasRepository.findAllById(
-                formStepDTO.getAssociatedSubformSubformCanvass() == null ? Collections.emptyList() : formStepDTO.getAssociatedSubformSubformCanvass());
-        if (associatedSubformSubformCanvass.size() != (formStepDTO.getAssociatedSubformSubformCanvass() == null ? 0 : formStepDTO.getAssociatedSubformSubformCanvass().size())) {
-            throw new NotFoundException("one of associatedSubformSubformCanvass not found");
-        }
-        formStep.setAssociatedSubformSubformCanvass(associatedSubformSubformCanvass.stream().collect(Collectors.toSet()));
         return formStep;
     }
 
