@@ -152,8 +152,9 @@ public class FormStepService {
 
 
         JSONArray associatedSubformsArray = new JSONArray();
-        JSONObject associatedSubformsObjects = new JSONObject();
+
         for (AssociatedSubform associatedSubform :associatedSubforms){
+            JSONObject associatedSubformsObjects = new JSONObject();
             associatedSubformsObjects.put("name",associatedSubform.getCanvasUuid().getName());
             associatedSubformsObjects.put("position",associatedSubform.getPosition());
             associatedSubformsArray.put(associatedSubformsObjects);
@@ -165,12 +166,6 @@ public class FormStepService {
 
 
         return ResponseEntity.ok(jsonString);
-    }
-
-    public UUID createJSON(final FormStepDTO formStepDTO) {
-        final FormStep formStep = new FormStep();
-        mapToEntity(formStepDTO, formStep);
-        return formStepRepository.save(formStep).getStepUuid();
     }
 
 
