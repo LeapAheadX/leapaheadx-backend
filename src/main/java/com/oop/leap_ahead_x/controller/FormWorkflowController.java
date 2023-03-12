@@ -40,6 +40,18 @@ public class FormWorkflowController {
         return ResponseEntity.ok(formWorkflowService.get(formUuid));
     }
 
+    //get all forms,input componenets,options
+    @GetMapping("/forms")
+    public ResponseEntity<String> getEmptyForms() {
+        return formWorkflowService.getEmptyForms();
+    }
+
+    //get form by form id
+    @GetMapping("/forms/{fId}")
+    public ResponseEntity<String> getFormById(@PathVariable(name = "fId")final UUID fId) {
+        return formWorkflowService.getFormById(fId);
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<UUID> createFormWorkflow(
