@@ -29,10 +29,10 @@ public class FormStepController {
         this.formStepService = formStepService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<FormStepDTO>> getAllFormSteps() {
-//        return ResponseEntity.ok(formStepService.findAll());
-//    }
+    @GetMapping("/original")
+    public ResponseEntity<List<FormStepDTO>> getAllFormSteps() {
+        return ResponseEntity.ok(formStepService.findAll());
+    }
 
 //    @GetMapping("/{stepUuid}")
 //    public ResponseEntity<FormStepDTO> getFormStep(
