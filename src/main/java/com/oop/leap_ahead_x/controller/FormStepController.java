@@ -40,11 +40,11 @@ public class FormStepController {
         return ResponseEntity.ok(formStepService.get(stepUuid));
     }
 
-    @PostMapping
-    @ApiResponse(responseCode = "201")
-    public ResponseEntity<UUID> createFormStep(@RequestBody @Valid final FormStepDTO formStepDTO) {
-        return new ResponseEntity<>(formStepService.create(formStepDTO), HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    @ApiResponse(responseCode = "201")
+//    public ResponseEntity<UUID> createFormStep(@RequestBody @Valid final FormStepDTO formStepDTO) {
+//        return new ResponseEntity<>(formStepService.create(formStepDTO), HttpStatus.CREATED);
+//    }
 
     @PutMapping("/{stepUuid}")
     public ResponseEntity<Void> updateFormStep(@PathVariable(name = "stepUuid") final UUID stepUuid,
@@ -60,5 +60,22 @@ public class FormStepController {
         formStepService.delete(stepUuid);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/test")
+    public ResponseEntity<String> getAllSubstepDetails(){
+        return formStepService.getAllSubstepDetails();
+    }
+
+    @GetMapping("/test/{stepUuid}")
+    public ResponseEntity<String> getSubstepDetails(@PathVariable(name = "stepUuid") final UUID stepUuid){
+        return formStepService.getSubstepDetails(stepUuid);
+    }
+
+    @PostMapping
+    @ApiResponse(responseCode = "201")
+    public ResponseEntity<UUID> createFormStep(@RequestBody @Valid final FormStepDTO formStepDTO) {
+        return new ResponseEntity<>(formStepService.createJSON(formStepDTO), HttpStatus.CREATED);
+    }
+
+
 
 }
