@@ -1,14 +1,26 @@
 package com.oop.leap_ahead_x.service;
 
+import com.oop.leap_ahead_x.domain.AssociatedSubform;
 import com.oop.leap_ahead_x.domain.FormStep;
 import com.oop.leap_ahead_x.domain.FormWorkflow;
+import com.oop.leap_ahead_x.domain.SubformCanvas;
+
 import com.oop.leap_ahead_x.dto.FormStepDTO;
+
+import com.oop.leap_ahead_x.repos.AssociatedSubformRepository;
 import com.oop.leap_ahead_x.repos.FormStepRepository;
 import com.oop.leap_ahead_x.repos.FormWorkflowRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
+
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import jakarta.transaction.Transactional;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -18,10 +30,13 @@ public class FormStepService {
     private final FormStepRepository formStepRepository;
     private final FormWorkflowRepository formWorkflowRepository;
 
+    private final AssociatedSubformRepository associatedSubformRepository;
+
     public FormStepService(final FormStepRepository formStepRepository,
-                           final FormWorkflowRepository formWorkflowRepository) {
+                           final FormWorkflowRepository formWorkflowRepository, AssociatedSubformRepository associatedSubformRepository) {
         this.formStepRepository = formStepRepository;
         this.formWorkflowRepository = formWorkflowRepository;
+        this.associatedSubformRepository = associatedSubformRepository;
     }
 
     public List<FormStepDTO> findAll() {
@@ -55,13 +70,30 @@ public class FormStepService {
     }
 
     private FormStepDTO mapToDTO(final FormStep formStep, final FormStepDTO formStepDTO) {
-        formStepDTO.setStepUuid(formStep.getStepUuid());
+        UUID stepUuid=formStep.getStepUuid();
+        formStepDTO.setStepUuid(stepUuid);
         formStepDTO.setAssigneeType(formStep.getAssigneeType());
         formStepDTO.setOrderNo(formStep.getOrderNo());
         formStepDTO.setAction(formStep.getAction());
         formStepDTO.setParentForm(formStep.getParentForm() == null ? null : formStep.getParentForm().getFormUuid());
+
+
+        List <SubformCanvas> afs = associatedSubformRepository.findByStepUuid(formStep)
+                .stream()
+                .map(AssociatedSubform::getCanvasUuid)
+                .collect(Collectors.toList());
+        List <UUID> uuid = afs
+                .stream()
+                .map(SubformCanvas::getCanvasUuid)
+                .collect(Collectors.toList());
+        formStepDTO.setAssociatedSubformSubformCanvass(uuid);
+
         return formStepDTO;
     }
+
+
+
+
 
     private FormStep mapToEntity(final FormStepDTO formStepDTO, final FormStep formStep) {
         formStep.setAssigneeType(formStepDTO.getAssigneeType());
@@ -72,5 +104,74 @@ public class FormStepService {
         formStep.setParentForm(parentForm);
         return formStep;
     }
+
+    @Transactional
+    public ResponseEntity<String> getAllSubstepDetails(){
+        JSONArray outerArray = new JSONArray();
+        List<FormStep> formSteps = formStepRepository.findAll();
+
+        for (FormStep formStep: formSteps){
+            JSONObject formObjects = new JSONObject();
+            formObjects.put("stepUuid", formStep.getStepUuid());
+            formObjects.put("assigneeType", formStep.getAssigneeType());
+            formObjects.put("action", formStep.getAction());
+            formObjects.put("orderNo", formStep.getOrderNo());
+            List<AssociatedSubform> associatedSubforms = associatedSubformRepository.findByStepUuid(formStep);
+
+            JSONArray associatedSubformsArray = new JSONArray();
+            for (AssociatedSubform associatedSubform :associatedSubforms){
+
+                JSONObject associatedSubformsObjects = new JSONObject();
+                associatedSubformsObjects.put("name",associatedSubform.getCanvasUuid().getName());
+                associatedSubformsObjects.put("position",associatedSubform.getPosition());
+                associatedSubformsArray.put(associatedSubformsObjects);
+            }
+
+            formObjects.put("associatedSubform", associatedSubformsArray);
+            outerArray.put(formObjects);
+        }
+
+
+        String jsonString = outerArray.toString();
+
+
+        return ResponseEntity.ok(jsonString);
+    }
+
+    @Transactional
+    public ResponseEntity<String> getSubstepDetails(final UUID step){
+        JSONArray outerArray = new JSONArray();
+        FormStep formStep = formStepRepository.getReferenceById(step);
+        JSONObject formObjects = new JSONObject();
+
+        formObjects.put("stepUuid", formStep.getStepUuid());
+        formObjects.put("assigneeType", formStep.getAssigneeType());
+        formObjects.put("action", formStep.getAction());
+        formObjects.put("orderNo", formStep.getOrderNo());
+        List<AssociatedSubform> associatedSubforms = associatedSubformRepository.findByStepUuid(formStep);
+
+
+        JSONArray associatedSubformsArray = new JSONArray();
+        JSONObject associatedSubformsObjects = new JSONObject();
+        for (AssociatedSubform associatedSubform :associatedSubforms){
+            associatedSubformsObjects.put("name",associatedSubform.getCanvasUuid().getName());
+            associatedSubformsObjects.put("position",associatedSubform.getPosition());
+            associatedSubformsArray.put(associatedSubformsObjects);
+        }
+
+        formObjects.put("associatedSubform", associatedSubformsArray);
+        outerArray.put(formObjects);
+        String jsonString = outerArray.toString();
+
+
+        return ResponseEntity.ok(jsonString);
+    }
+
+    public UUID createJSON(final FormStepDTO formStepDTO) {
+        final FormStep formStep = new FormStep();
+        mapToEntity(formStepDTO, formStep);
+        return formStepRepository.save(formStep).getStepUuid();
+    }
+
 
 }
