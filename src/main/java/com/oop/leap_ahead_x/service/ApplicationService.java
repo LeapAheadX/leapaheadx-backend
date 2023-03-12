@@ -69,7 +69,10 @@ public class ApplicationService {
 //        applicationDTO.setCreatedFor(application.getCreatedFor() == null ? null : application.getCreatedFor().getVendorUuid());
         Optional<Vendor> vendor = vendorRepository.findById(application.getCreatedFor().getVendorUuid());
         applicationDTO.setCompany(vendor.get().getCompany());
-        applicationDTO.setFormUuid(application.getFormUuid() == null ? null : application.getFormUuid().getFormUuid());
+
+        Optional<FormWorkflow> formWorkflow = formWorkflowRepository.findById(application.getFormUuid().getFormUuid());
+        applicationDTO.setFormName(formWorkflow.get().getName());
+//        applicationDTO.setFormUuid(application.getFormUuid() == null ? null : application.getFormUuid().getFormUuid());
         return applicationDTO;
     }
 
@@ -84,8 +87,11 @@ public class ApplicationService {
 
         final Vendor createdFor = applicationDTO.getCompany() == null ? null : vendorRepository.findByCompanyName(applicationDTO.getCompany());
         application.setCreatedFor(createdFor);
-        final FormWorkflow formUuid = applicationDTO.getFormUuid() == null ? null : formWorkflowRepository.findById(applicationDTO.getFormUuid())
-                .orElseThrow(() -> new NotFoundException("formUuid not found"));
+//        final FormWorkflow formUuid = applicationDTO.getFormUuid() == null ? null : formWorkflowRepository.findById(applicationDTO.getFormUuid())
+//                .orElseThrow(() -> new NotFoundException("formUuid not found"));
+//        application.setFormUuid(formUuid);
+
+        final FormWorkflow formUuid = applicationDTO.getFormName() == null ? null : formWorkflowRepository.findByFormName(applicationDTO.getFormName());
         application.setFormUuid(formUuid);
         return application;
     }
