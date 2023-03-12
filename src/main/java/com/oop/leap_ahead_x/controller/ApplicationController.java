@@ -33,6 +33,30 @@ public class ApplicationController {
         return ResponseEntity.ok(applicationService.get(applicationUuid));
     }
 
+    //Get an array of subcanvas id which needs to be filled up by the assigned person for a particular application. returns the form Id which is used to render the form
+    //http://localhost:8080/api/applications/79ec03aa-bd58-11ed-afa1-0242ac120002/user/79ebaad6-bd58-11ed-afa1-0242ac120002
+    @GetMapping("{aId}/user/{uId}")
+    public ResponseEntity<String> getAssignedApplication(
+            @PathVariable(name = "uId") final UUID uId,@PathVariable(name = "aId") final UUID aId) {
+        return applicationService.getAssignedApplication(uId,aId);
+    }
+
+    //Get an array of applicationID,formID,formName,status,currentstepNumber based on the vendorID
+    //http://localhost:8080/api/applications/vendor/79ebb4e0-bd58-11ed-afa1-0242ac120002
+    @GetMapping("/vendor/{vId}")
+    public ResponseEntity<String> getApplicationByVendor(
+            @PathVariable(name = "vId") final UUID vId) {
+        return applicationService.getApplicationByVendor(vId);
+    }
+
+    //Get an array of applicationID,formID,formName,status,currentstepNumber based on the vendorID
+    //http://localhost:8080/api/applications/getFullForm/79ec053a-bd58-11ed-afa1-0242ac120002
+    @GetMapping("/getFullForm/{applicationUuid}")
+    public ResponseEntity<String> getApplicationWithAllDetails(
+            @PathVariable(name = "applicationUuid") final UUID aId) {
+        return applicationService.getApplicationWithAllDetails(aId);
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<UUID> createApplication(
