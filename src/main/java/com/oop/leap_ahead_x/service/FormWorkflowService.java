@@ -1,14 +1,17 @@
 package com.oop.leap_ahead_x.service;
 
-import com.oop.leap_ahead_x.domain.Admin;
-import com.oop.leap_ahead_x.domain.FormWorkflow;
+import com.oop.leap_ahead_x.domain.*;
 import com.oop.leap_ahead_x.dto.FormWorkflowDTO;
-import com.oop.leap_ahead_x.repos.AdminRepository;
-import com.oop.leap_ahead_x.repos.FormWorkflowRepository;
+import com.oop.leap_ahead_x.repos.*;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.transaction.Transactional;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -17,11 +20,26 @@ public class FormWorkflowService {
 
     private final FormWorkflowRepository formWorkflowRepository;
     private final AdminRepository adminRepository;
+    private final SubformCanvasRepository subformCanvasRepository;
+
+    private final InputComponentRepository inputComponentRepository;
+
+    private final OptionsRepository optionsRepository;
+
+    private final FormStepRepository formStepRepository;
+
+    private final AssociatedSubformRepository associatedSubformRepository;
 
     public FormWorkflowService(final FormWorkflowRepository formWorkflowRepository,
-            final AdminRepository adminRepository) {
+                               final AdminRepository adminRepository, final OptionsRepository optionsRepository, final InputComponentRepository inputComponentRepository,
+                               SubformCanvasRepository subformCanvasRepository, FormStepRepository formStepRepository, final AssociatedSubformRepository associatedSubformRepository) {
         this.formWorkflowRepository = formWorkflowRepository;
         this.adminRepository = adminRepository;
+        this.subformCanvasRepository = subformCanvasRepository;
+        this.inputComponentRepository = inputComponentRepository;
+        this.optionsRepository = optionsRepository;
+        this.formStepRepository = formStepRepository;
+        this.associatedSubformRepository=associatedSubformRepository;
     }
 
     public List<FormWorkflowDTO> findAll() {
@@ -55,7 +73,7 @@ public class FormWorkflowService {
     }
 
     private FormWorkflowDTO mapToDTO(final FormWorkflow formWorkflow,
-            final FormWorkflowDTO formWorkflowDTO) {
+                                     final FormWorkflowDTO formWorkflowDTO) {
         formWorkflowDTO.setFormUuid(formWorkflow.getFormUuid());
         formWorkflowDTO.setName(formWorkflow.getName());
         formWorkflowDTO.setDescription(formWorkflow.getDescription());
@@ -64,7 +82,7 @@ public class FormWorkflowService {
     }
 
     private FormWorkflow mapToEntity(final FormWorkflowDTO formWorkflowDTO,
-            final FormWorkflow formWorkflow) {
+                                     final FormWorkflow formWorkflow) {
         formWorkflow.setName(formWorkflowDTO.getName());
         formWorkflow.setDescription(formWorkflowDTO.getDescription());
         final Admin createdBy = formWorkflowDTO.getCreatedBy() == null ? null : adminRepository.findById(formWorkflowDTO.getCreatedBy())
@@ -76,5 +94,113 @@ public class FormWorkflowService {
     public boolean nameExists(final String name) {
         return formWorkflowRepository.existsByNameIgnoreCase(name);
     }
+
+    @Transactional
+    public ResponseEntity<String> getEmptyForms() {
+        //get full form
+        JSONArray outerArray = new JSONArray();
+        List<FormWorkflow> forms = formWorkflowRepository.findAll();
+        for (FormWorkflow form : forms) {
+            JSONObject formObjects = new JSONObject();
+            FormStep stepIdApprover = formStepRepository.findByParentFormAndAction(form, "Check and Approve");
+            List<AssociatedSubform> subforms = associatedSubformRepository.findCanvasByStep(stepIdApprover);
+            formObjects.put("formId", form.getFormUuid());
+            formObjects.put("formName", form.getName());
+            JSONArray canvaArrays = new JSONArray();
+            for (AssociatedSubform subform : subforms) {
+                JSONObject canvaObjects = new JSONObject();
+                UUID canvasId = subform.getCanvasUuid().getCanvasUuid();
+                SubformCanvas canva = subformCanvasRepository.getReferenceById(canvasId);
+                String canvasName = canva.getName();
+                JSONArray canvaArray = new JSONArray();
+                final List<InputComponent> components = inputComponentRepository.findByParentCanvas(canva);
+                for (InputComponent component : components) {
+                    JSONObject individualComponentObject = new JSONObject();
+                    int componentOrderNo = component.getOrderNo();
+                    String question = component.getQuestion();
+                    String type = component.getType();
+                    UUID cId = component.getComponentUuid();
+                    individualComponentObject.put("orderNo", componentOrderNo);
+                    individualComponentObject.put("question", question);
+                    individualComponentObject.put("type", type);
+                    individualComponentObject.put("componentId", cId);
+                    List<Options> options = optionsRepository.findOptionsByComponent(cId);
+                    JSONArray optionArray = new JSONArray();
+                    for (Options option : options) {
+                        String prompt = option.getOptionPrompt();
+                        optionArray.put(prompt);
+                    }
+                    individualComponentObject.put("optionPrompt", optionArray);
+//                    String value = applicationResponseValueRepository.getValue(application, component, canva);
+//                    individualComponentObject.put("Value", value);
+                    canvaArray.put(individualComponentObject);
+
+                }
+                canvaObjects.put("canvaComponent",canvaArray);
+                canvaObjects.put("canvasName", canvasName);
+                canvaObjects.put("canvasId", canvasId);
+                canvaObjects.put("canvasPostion", subform.getPosition());
+                canvaArrays.put(canvaObjects);
+            }
+            formObjects.put("Canva",canvaArrays);
+            outerArray.put(formObjects);
+
+        }
+        String jsonString = outerArray.toString();
+        return ResponseEntity.ok(jsonString);
+    }
+
+    @Transactional
+    public ResponseEntity<String> getFormById(final UUID fId) {
+        //get full form
+        JSONArray outerArray = new JSONArray();
+        FormWorkflow form = formWorkflowRepository.getReferenceById(fId);
+        JSONObject formObjects = new JSONObject();
+        FormStep stepIdApprover = formStepRepository.findByParentFormAndAction(form, "Check and Approve");
+        List<AssociatedSubform> subforms = associatedSubformRepository.findCanvasByStep(stepIdApprover);
+        formObjects.put("formId", form.getFormUuid());
+        formObjects.put("formName", form.getName());
+        JSONArray canvaArrays = new JSONArray();
+        for (AssociatedSubform subform : subforms) {
+            JSONObject canvaObjects = new JSONObject();
+            UUID canvasId = subform.getCanvasUuid().getCanvasUuid();
+            SubformCanvas canva = subformCanvasRepository.getReferenceById(canvasId);
+            String canvasName = canva.getName();
+            JSONArray canvaArray = new JSONArray();
+            final List<InputComponent> components = inputComponentRepository.findByParentCanvas(canva);
+            for (InputComponent component : components) {
+                JSONObject individualComponentObject = new JSONObject();
+                int componentOrderNo = component.getOrderNo();
+                String question = component.getQuestion();
+                String type = component.getType();
+                UUID cId = component.getComponentUuid();
+                individualComponentObject.put("orderNo", componentOrderNo);
+                individualComponentObject.put("question", question);
+                individualComponentObject.put("type", type);
+                individualComponentObject.put("componentId", cId);
+                List<Options> options = optionsRepository.findOptionsByComponent(cId);
+                JSONArray optionArray = new JSONArray();
+                for (Options option : options) {
+                    String prompt = option.getOptionPrompt();
+                    optionArray.put(prompt);
+                }
+                individualComponentObject.put("optionPrompt", optionArray);
+//                    String value = applicationResponseValueRepository.getValue(application, component, canva);
+//                    individualComponentObject.put("Value", value);
+                canvaArray.put(individualComponentObject);
+
+            }
+            canvaObjects.put("canvaComponent",canvaArray);
+            canvaObjects.put("canvasName", canvasName);
+            canvaObjects.put("canvasId", canvasId);
+            canvaObjects.put("canvasPostion", subform.getPosition());
+            canvaArrays.put(canvaObjects);
+        }
+        formObjects.put("canva",canvaArrays);
+        outerArray.put(formObjects);
+        String jsonString = outerArray.toString();
+        return ResponseEntity.ok(jsonString);
+    }
+
 
 }
