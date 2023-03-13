@@ -43,6 +43,13 @@ public class ApplicationService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public List<ApplicationDTO> getByStatus(final String status){
+        final List<Application> applications = applicationRepository.findByStatus(status);
+        return applications.stream()
+                .map((application) -> mapToDTO(application, new ApplicationDTO()))
+                .toList();
+    }
+
     public UUID create(final ApplicationDTO applicationDTO) {
         final Application application = new Application();
         mapToEntity(applicationDTO, application);
