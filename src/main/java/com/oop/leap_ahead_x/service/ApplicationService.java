@@ -85,7 +85,57 @@ public class ApplicationService {
     }
 
     @Transactional
-    public ResponseEntity<String> getAssignedApplication(final UUID uId,final UUID aId) {
+    public void saveVendor(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("inProgress");
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public void vendorSubmit(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("Pending");
+        int currentStep = application.getCurrentStepNo()+1;
+        application.setCurrentStepNo(currentStep);
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public void adminReject(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("inProgress");
+        int currentStep = application.getCurrentStepNo()-1;
+        application.setCurrentStepNo(currentStep);
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public void adminSubmit(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("Escalated");
+        int currentStep = application.getCurrentStepNo()+1;
+        application.setCurrentStepNo(currentStep);
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public void approverReject(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("Pending");
+        int currentStep = application.getCurrentStepNo()-1;
+        application.setCurrentStepNo(currentStep);
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public void approverApprove(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("Completed");
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public ResponseEntity<String> getAssignedApplication(final UUID uId) {
         JSONArray outerArray = new JSONArray();
         String assigneeType = userRepository.getReferenceById(uId).getRole();
         List<Application> applications = applicationRepository.findAll();
@@ -97,24 +147,48 @@ public class ApplicationService {
             List<FormStep> steps = formStepRepository.findByParentForm(form);
             for (FormStep step : steps) {
                 //check if orderNumber == currentstep and the currentUserType is the same
-                if (step.getOrderNo().equals(currentStep) && step.getAssigneeType().equals(assigneeType)&& application.getApplicationUuid().equals(aId)) {
-                    JSONObject canvaObject = new JSONObject();
-                    //if same, return form
-                    //Go associated subform and get the subcanvas id that it needs to fill up
-                    List<AssociatedSubform> canvas = associatedSubformRepository.findByStepUuid(step);
-                    JSONArray canvaFillupNotRestricted = new JSONArray();
-                    for (AssociatedSubform canva : canvas) {
-                        canvaFillupNotRestricted.put(canva.getCanvasUuid().getCanvasUuid());
+                if (step.getOrderNo().equals(currentStep) && step.getAssigneeType().equals(assigneeType)) {
+                    if(step.getAssigneeType().equals("vendor")) {
+                        UUID vendorUserId = application.getCreatedFor().getUId().getUId();
+                        if(vendorUserId==uId) {
+                            JSONObject canvaObject = new JSONObject();
+                            //if same, return form
+                            //Go associated subform and get the subcanvas id that it needs to fill up
+                            List<AssociatedSubform> canvas = associatedSubformRepository.findByStepUuid(step);
+                            JSONArray canvaFillupNotRestricted = new JSONArray();
+                            for (AssociatedSubform canva : canvas) {
+                                canvaFillupNotRestricted.put(canva.getCanvasUuid().getCanvasUuid());
+                            }
+                            //an arrray that shows what subcanvas this user is able to edit
+                            canvaObject.put("canvaFillUpNotRestricted", canvaFillupNotRestricted);
+                            canvaObject.put("applicationID", application.getApplicationUuid());
+                            canvaObject.put("applicationStatus", application.getStatus());
+                            canvaObject.put("currentStep", application.getCurrentStepNo());
+                            canvaObject.put("FormId", form.getFormUuid());
+                            canvaObject.put("FormName", form.getName());
+                            canvaObject.put("VendorId", createdFor.getVendorUuid());
+                            canvaObject.put("userId", vendorUserId);
+                            outerArray.put(canvaObject);
+                        }
+                    }else{
+                        JSONObject canvaObject = new JSONObject();
+                        //if same, return form
+                        //Go associated subform and get the subcanvas id that it needs to fill up
+                        List<AssociatedSubform> canvas = associatedSubformRepository.findByStepUuid(step);
+                        JSONArray canvaFillupNotRestricted = new JSONArray();
+                        for (AssociatedSubform canva : canvas) {
+                            canvaFillupNotRestricted.put(canva.getCanvasUuid().getCanvasUuid());
+                        }
+                        //an arrray that shows what subcanvas this user is able to edit
+                        canvaObject.put("canvaFillUpNotRestricted", canvaFillupNotRestricted);
+                        canvaObject.put("applicationID", application.getApplicationUuid());
+                        canvaObject.put("applicationStatus", application.getStatus());
+                        canvaObject.put("currentStep", application.getCurrentStepNo());
+                        canvaObject.put("FormId", form.getFormUuid());
+                        canvaObject.put("FormName", form.getName());
+                        canvaObject.put("VendorId", createdFor.getVendorUuid());
+                        outerArray.put(canvaObject);
                     }
-                    //an arrray that shows what subcanvas this user is able to edit
-                    canvaObject.put("canvaFillUpNotRestricted", canvaFillupNotRestricted);
-                    canvaObject.put("applicationID", application.getApplicationUuid());
-                    canvaObject.put("applicationStatus",application.getStatus());
-                    canvaObject.put("currentStep",application.getCurrentStepNo());
-                    canvaObject.put("FormId", form.getFormUuid());
-                    canvaObject.put("FormName", form.getName());
-                    canvaObject.put("VendorId", createdFor.getVendorUuid());
-                    outerArray.put(canvaObject);
                 }
             }
         }
@@ -134,6 +208,8 @@ public class ApplicationService {
         formObjects.put("applicationId",aId);
         formObjects.put("applicationStatus",application.getStatus());
         formObjects.put("currentStep",application.getCurrentStepNo());
+        formObjects.put("dateCreated",application.getDateCreated());
+        formObjects.put("comments", application.getComment());
         formObjects.put("formId", form.getFormUuid());
         formObjects.put("formName", form.getName());
         JSONArray canvaArrays = new JSONArray();

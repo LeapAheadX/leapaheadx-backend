@@ -35,10 +35,10 @@ public class ApplicationController {
 
     //Get an array of subcanvas id which needs to be filled up by the assigned person for a particular application. returns the form Id which is used to render the form
     //http://localhost:8080/api/applications/79ec03aa-bd58-11ed-afa1-0242ac120002/user/79ebaad6-bd58-11ed-afa1-0242ac120002
-    @GetMapping("{aId}/user/{uId}")
+    @GetMapping("/user/{uId}")
     public ResponseEntity<String> getAssignedApplication(
-            @PathVariable(name = "uId") final UUID uId,@PathVariable(name = "aId") final UUID aId) {
-        return applicationService.getAssignedApplication(uId,aId);
+            @PathVariable(name = "uId") final UUID uId) {
+        return applicationService.getAssignedApplication(uId);
     }
 
     //Get an array of applicationID,formID,formName,status,currentstepNumber based on the vendorID
@@ -56,6 +56,55 @@ public class ApplicationController {
             @PathVariable(name = "applicationUuid") final UUID aId) {
         return applicationService.getApplicationWithAllDetails(aId);
     }
+
+    //Vendor save application
+    @PutMapping("/vendorSave/{aId}")
+    public ResponseEntity<Void> saveVendor(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.saveVendor(aId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Vendor submit application
+    @PutMapping("/vendorSubmit/{aId}")
+    public ResponseEntity<Void> vendorSubmit(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.vendorSubmit(aId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Admin reject application
+    @PutMapping("/adminReject/{aId}")
+    public ResponseEntity<Void> adminReject(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.adminReject(aId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Admin submit application
+    @PutMapping("/adminSubmit/{aId}")
+    public ResponseEntity<Void> adminSubmit(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.adminSubmit(aId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Approver reject application
+    @PutMapping("/approverReject/{aId}")
+    public ResponseEntity<Void> approverReject(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.approverReject(aId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Approver approve application
+    @PutMapping("/approverApprove/{aId}")
+    public ResponseEntity<Void> approverApprove(
+            @PathVariable(name = "aId") final UUID aId) {
+        applicationService.approverApprove(aId);
+        return ResponseEntity.ok().build();
+    }
+
 
     @PostMapping
     @ApiResponse(responseCode = "201")
