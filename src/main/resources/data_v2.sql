@@ -3,15 +3,15 @@ USE leap_ahead_x;
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
 VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
 VALUES ('79eb9fd2-bd58-11ed-afa1-0242ac120002','approver@gmail.com', MD5('approver'), 'approver', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
 VALUES ('79ebaad6-bd58-11ed-afa1-0242ac120002','vendor@gmail.com', MD5('vendor'), 'vendor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- Assignment of Users to Admins

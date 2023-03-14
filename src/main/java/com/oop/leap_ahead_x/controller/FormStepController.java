@@ -29,16 +29,16 @@ public class FormStepController {
         this.formStepService = formStepService;
     }
 
-    @GetMapping
+    @GetMapping("/original")
     public ResponseEntity<List<FormStepDTO>> getAllFormSteps() {
         return ResponseEntity.ok(formStepService.findAll());
     }
 
-    @GetMapping("/{stepUuid}")
-    public ResponseEntity<FormStepDTO> getFormStep(
-            @PathVariable(name = "stepUuid") final UUID stepUuid) {
-        return ResponseEntity.ok(formStepService.get(stepUuid));
-    }
+//    @GetMapping("/{stepUuid}")
+//    public ResponseEntity<FormStepDTO> getFormStep(
+//            @PathVariable(name = "stepUuid") final UUID stepUuid) {
+//        return ResponseEntity.ok(formStepService.get(stepUuid));
+//    }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
@@ -60,5 +60,18 @@ public class FormStepController {
         formStepService.delete(stepUuid);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping
+    public ResponseEntity<String> getAllSubstepDetails(){
+        return formStepService.getAllSubstepDetails();
+    }
+
+    @GetMapping("/{stepUuid}")
+    public ResponseEntity<String> getSubstepDetails(@PathVariable(name = "stepUuid") final UUID stepUuid){
+        return formStepService.getSubstepDetails(stepUuid);
+    }
+
+
+
+
 
 }
