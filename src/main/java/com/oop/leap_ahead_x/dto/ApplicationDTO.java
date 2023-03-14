@@ -18,13 +18,25 @@ public class ApplicationDTO {
     private String comment;
 
     @NotNull
+    @Size(max = 225)
+    private String company;
+
+    @NotNull
+    @Size(max = 225)
+    private String formName;
+
+
+
+    @NotNull
     private Integer currentStepNo;
 
-    @NotNull
-    private UUID createdFor;
+//    @NotNull
+//    private UUID createdFor;
 
-    @NotNull
-    private UUID formUuid;
+//    @NotNull
+//    private UUID formUuid;
+
+
 
     public UUID getApplicationUuid() {
         return applicationUuid;
@@ -58,20 +70,36 @@ public class ApplicationDTO {
         this.currentStepNo = currentStepNo;
     }
 
-    public UUID getCreatedFor() {
-        return createdFor;
+//    public UUID getCreatedFor() {
+//        return createdFor;
+//    }
+//
+//    public void setCreatedFor(final UUID createdFor) {
+//        this.createdFor = createdFor;
+//    }
+
+//    public UUID getFormUuid() {
+//        return formUuid;
+//    }
+//
+//    public void setFormUuid(final UUID formUuid) {
+//        this.formUuid = formUuid;
+//    }
+
+    public String getCompany() {
+        return company;
     }
 
-    public void setCreatedFor(final UUID createdFor) {
-        this.createdFor = createdFor;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public UUID getFormUuid() {
-        return formUuid;
+    public String getFormName() {
+        return formName;
     }
 
-    public void setFormUuid(final UUID formUuid) {
-        this.formUuid = formUuid;
+    public void setFormName(String formName) {
+        this.formName = formName;
     }
 
 }
