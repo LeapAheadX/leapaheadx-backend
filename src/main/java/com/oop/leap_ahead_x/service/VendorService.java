@@ -58,7 +58,7 @@ public class VendorService {
         vendorDTO.setVendorUuid(vendor.getVendorUuid());
         vendorDTO.setCompany(vendor.getCompany());
         vendorDTO.setCountry(vendor.getCountry());
-        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
+//        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
         return vendorDTO;
     }
 

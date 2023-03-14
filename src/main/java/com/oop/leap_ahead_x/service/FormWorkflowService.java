@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Service
@@ -78,6 +80,12 @@ public class FormWorkflowService {
         formWorkflowDTO.setName(formWorkflow.getName());
         formWorkflowDTO.setDescription(formWorkflow.getDescription());
         formWorkflowDTO.setCreatedBy(formWorkflow.getCreatedBy() == null ? null : formWorkflow.getCreatedBy().getAdminUuid());
+        OffsetDateTime dateTime = formWorkflow.getDateCreated();
+        // create a formatter to format the date string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        // format the date string
+        String formattedDateTime = formatter.format(dateTime);
+        formWorkflowDTO.setDateCreated(formattedDateTime);
         return formWorkflowDTO;
     }
 
