@@ -13,6 +13,6 @@ import java.util.List;
 public interface AssociatedSubformRepository extends JpaRepository<AssociatedSubform, Integer> {
     List<AssociatedSubform> findByStepUuid(FormStep step);
 
-    @Query("SELECT c FROM AssociatedSubform c WHERE c.stepUuid= :sId")
+    @Query("SELECT c FROM AssociatedSubform c WHERE c.stepUuid= :sId order by c.position")
     List<AssociatedSubform> findCanvasByStep(@Param("sId") FormStep sId);
 }
