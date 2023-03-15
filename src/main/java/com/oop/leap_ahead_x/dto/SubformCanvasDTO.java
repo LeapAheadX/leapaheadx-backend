@@ -2,6 +2,8 @@ package com.oop.leap_ahead_x.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 
@@ -18,6 +20,9 @@ public class SubformCanvasDTO {
 
     @NotNull
     private UUID createdBy;
+
+    @NotNull
+    private OffsetDateTime dateCreated;
 
     public UUID getCanvasUuid() {
         return canvasUuid;
@@ -50,5 +55,9 @@ public class SubformCanvasDTO {
     public void setCreatedBy(final UUID createdBy) {
         this.createdBy = createdBy;
     }
+
+    public OffsetDateTime getDateCreated() { return dateCreated; }
+
+    public void setDateCreated(OffsetDateTime dateCreated) { this.dateCreated = dateCreated; }
 
 }
