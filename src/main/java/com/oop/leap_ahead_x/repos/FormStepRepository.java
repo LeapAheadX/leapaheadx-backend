@@ -13,4 +13,5 @@ import org.springframework.stereotype.Repository;
 public interface FormStepRepository extends JpaRepository<FormStep, UUID> {
     List<FormStep> findByParentForm(FormWorkflow form);
     FormStep findByParentFormAndAction(FormWorkflow form,String action);
+    FormStep findByParentFormAndOrderNo(FormWorkflow form,int orderNo);
 }
