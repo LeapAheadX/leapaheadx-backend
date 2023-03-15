@@ -60,6 +60,7 @@ public class SubformCanvasService {
         subformCanvasDTO.setName(subformCanvas.getName());
         subformCanvasDTO.setDescription(subformCanvas.getDescription());
         subformCanvasDTO.setCreatedBy(subformCanvas.getCreatedBy() == null ? null : subformCanvas.getCreatedBy().getAdminUuid());
+        subformCanvasDTO.setDateCreated(subformCanvas.getDateCreated());
         return subformCanvasDTO;
     }
 
@@ -70,6 +71,7 @@ public class SubformCanvasService {
         final Admin createdBy = subformCanvasDTO.getCreatedBy() == null ? null : adminRepository.findById(subformCanvasDTO.getCreatedBy())
                 .orElseThrow(() -> new NotFoundException("createdBy not found"));
         subformCanvas.setCreatedBy(createdBy);
+        subformCanvas.setDateCreated(subformCanvasDTO.getDateCreated());
         return subformCanvas;
     }
 
