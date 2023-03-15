@@ -57,6 +57,14 @@ public class ApplicationController {
         return applicationService.getApplicationWithAllDetails(aId);
     }
 
+    //get current assignee type of application using application UUID
+    @GetMapping("/assignee/{applicationUuid}")
+    public ResponseEntity<String> getApplicationCurrentAssigneeType(
+            @PathVariable(name = "applicationUuid") final UUID aId) {
+        return applicationService.getApplicationCurrentAssigneeType(aId);
+    }
+
+
     //Vendor save application
     @PutMapping("/vendorSave/{aId}")
     public ResponseEntity<Void> saveVendor(
