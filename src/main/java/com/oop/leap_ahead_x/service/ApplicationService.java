@@ -272,6 +272,16 @@ public class ApplicationService {
         return ResponseEntity.ok(jsonString);
     }
 
+    @Transactional
+    public ResponseEntity<String> getApplicationCurrentAssigneeType(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        FormWorkflow form = application.getFormUuid();
+        int currentStepNo = application.getCurrentStepNo();
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,currentStepNo);
+        String assigneeType = assignee.getAssigneeType();
+        return ResponseEntity.ok(assigneeType);
+    }
+
     private ApplicationDTO mapToDTO(final Application application,
                                     final ApplicationDTO applicationDTO) {
         applicationDTO.setApplicationUuid(application.getApplicationUuid());
