@@ -12,4 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface ApplicationResponseValueRepository extends JpaRepository<ApplicationResponseValue, Integer> {
     @Query("SELECT a.value FROM ApplicationResponseValue a WHERE a.applicationUuid = :aId AND a.componentUuid = :cId AND a.canvasUuid = :canId")
     String getValue(@Param("aId") Application applicationUuid, @Param("cId") InputComponent componentUuid, @Param("canId") SubformCanvas canvasUuid);
+
+    void deleteByApplicationUuid(Application application);
 }

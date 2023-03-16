@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -62,6 +63,12 @@ public class ApplicationResponseValueService {
                 .orElseThrow(NotFoundException::new);
         mapToEntity(applicationResponseValueDTO, applicationResponseValue);
         applicationResponseValueRepository.save(applicationResponseValue);
+    }
+
+    @Transactional
+    public void deleteByAId (final UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        applicationResponseValueRepository.deleteByApplicationUuid(application);
     }
 
     public void delete(final Integer responseId) {
