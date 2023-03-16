@@ -112,6 +112,14 @@ public class ApplicationController {
         applicationService.approverApprove(aId);
         return ResponseEntity.ok().build();
     }
+    //delete application based on application Id.
+    @DeleteMapping("/{applicationUuid}")
+    @ApiResponse(responseCode = "204")
+    public ResponseEntity<Void> deleteApplication(
+            @PathVariable(name = "applicationUuid") final UUID applicationUuid) {
+        applicationService.delete(applicationUuid);
+        return ResponseEntity.noContent().build();
+    }
 
 
     @PostMapping
@@ -129,13 +137,7 @@ public class ApplicationController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/{applicationUuid}")
-    @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteApplication(
-            @PathVariable(name = "applicationUuid") final UUID applicationUuid) {
-        applicationService.delete(applicationUuid);
-        return ResponseEntity.noContent().build();
-    }
+
 
     @GetMapping("/status/{status}")
     public ResponseEntity<List<ApplicationDTO>>  getApplicationByStatus(
