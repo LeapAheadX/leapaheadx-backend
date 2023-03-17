@@ -1,6 +1,7 @@
 package com.oop.leap_ahead_x.controller;
 
 import com.oop.leap_ahead_x.dto.FormWorkflowDTO;
+import com.oop.leap_ahead_x.dto.FormWorkflowDTO_Post;
 import com.oop.leap_ahead_x.service.FormWorkflowService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -48,15 +49,15 @@ public class FormWorkflowController {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<UUID> createFormWorkflow(
-            @RequestBody @Valid final FormWorkflowDTO formWorkflowDTO) {
-        return new ResponseEntity<>(formWorkflowService.create(formWorkflowDTO), HttpStatus.CREATED);
+            @RequestBody @Valid final FormWorkflowDTO_Post formWorkflowDTO_post) {
+        return new ResponseEntity<>(formWorkflowService.create(formWorkflowDTO_post), HttpStatus.CREATED);
     }
 
     @PutMapping("/{formUuid}")
     public ResponseEntity<Void> updateFormWorkflow(
             @PathVariable(name = "formUuid") final UUID formUuid,
-            @RequestBody @Valid final FormWorkflowDTO formWorkflowDTO) {
-        formWorkflowService.update(formUuid, formWorkflowDTO);
+            @RequestBody @Valid final FormWorkflowDTO_Post formWorkflowDTO_post) {
+        formWorkflowService.update(formUuid, formWorkflowDTO_post);
         return ResponseEntity.ok().build();
     }
 
