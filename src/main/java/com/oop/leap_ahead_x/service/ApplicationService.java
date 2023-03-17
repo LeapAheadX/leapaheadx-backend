@@ -87,7 +87,7 @@ public class ApplicationService {
     @Transactional
     public void saveVendor(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("inProgress");
+        application.setStatus("InProgress");
         applicationRepository.save(application);
     }
 
@@ -103,7 +103,7 @@ public class ApplicationService {
     @Transactional
     public void adminReject(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("inProgress");
+        application.setStatus("InProgress");
         int currentStep = application.getCurrentStepNo()-1;
         application.setCurrentStepNo(currentStep);
         applicationRepository.save(application);
@@ -164,9 +164,9 @@ public class ApplicationService {
                             canvaObject.put("applicationID", application.getApplicationUuid());
                             canvaObject.put("applicationStatus", application.getStatus());
                             canvaObject.put("currentStep", application.getCurrentStepNo());
-                            canvaObject.put("FormId", form.getFormUuid());
-                            canvaObject.put("FormName", form.getName());
-                            canvaObject.put("VendorId", createdFor.getVendorUuid());
+                            canvaObject.put("formId", form.getFormUuid());
+                            canvaObject.put("formName", form.getName());
+                            canvaObject.put("vendorId", createdFor.getVendorUuid());
                             canvaObject.put("userId", vendorUserId);
                             outerArray.put(canvaObject);
                         }
@@ -184,9 +184,9 @@ public class ApplicationService {
                         canvaObject.put("applicationID", application.getApplicationUuid());
                         canvaObject.put("applicationStatus", application.getStatus());
                         canvaObject.put("currentStep", application.getCurrentStepNo());
-                        canvaObject.put("FormId", form.getFormUuid());
-                        canvaObject.put("FormName", form.getName());
-                        canvaObject.put("VendorId", createdFor.getVendorUuid());
+                        canvaObject.put("formId", form.getFormUuid());
+                        canvaObject.put("formName", form.getName());
+                        canvaObject.put("vendorId", createdFor.getVendorUuid());
                         outerArray.put(canvaObject);
                     }
                 }
@@ -202,13 +202,16 @@ public class ApplicationService {
         JSONArray outerArray = new JSONArray();
         Application application = applicationRepository.getReferenceById(aId);
         FormWorkflow form = formWorkflowRepository.getReferenceById(application.getFormUuid().getFormUuid());
+        Vendor vendor = application.getCreatedFor();
+        String companyName = vendor.getCompany();
         JSONObject formObjects = new JSONObject();
         FormStep stepIdApprover = formStepRepository.findByParentFormAndAction(form, "Check and Approve");
         List<AssociatedSubform> subforms = associatedSubformRepository.findCanvasByStep(stepIdApprover);
         formObjects.put("applicationId",aId);
+        formObjects.put("companyName",companyName);
         formObjects.put("applicationStatus",application.getStatus());
         formObjects.put("currentStep",application.getCurrentStepNo());
-        formObjects.put("dateCreated",application.getDateCreated());
+        formObjects.put("dateCreated",application.getDateCreated().toString());
         formObjects.put("comments", application.getComment());
         formObjects.put("formId", form.getFormUuid());
         formObjects.put("formName", form.getName());
@@ -230,6 +233,7 @@ public class ApplicationService {
                 individualComponentObject.put("question", question);
                 individualComponentObject.put("type", type);
                 individualComponentObject.put("componentId", cId);
+                individualComponentObject.put("required",component.getIsRequired());
                 List<Options> options = optionsRepository.findOptionsByComponent(cId);
                 JSONArray optionArray = new JSONArray();
                 for (Options option : options) {
@@ -264,8 +268,8 @@ public class ApplicationService {
             applicationObject.put("status",application.getStatus());
             applicationObject.put("currentStep",application.getCurrentStepNo());
             FormWorkflow form = application.getFormUuid();
-            applicationObject.put("FormId",form.getFormUuid());
-            applicationObject.put("FormName",form.getName());
+            applicationObject.put("formId",form.getFormUuid());
+            applicationObject.put("formName",form.getName());
             outerArray.put(applicationObject);
         }
         String jsonString = outerArray.toString();
