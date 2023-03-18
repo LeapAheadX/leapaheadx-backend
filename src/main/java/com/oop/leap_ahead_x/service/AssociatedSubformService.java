@@ -9,9 +9,11 @@ import com.oop.leap_ahead_x.dto.AssociatedSubformDTO;
 import com.oop.leap_ahead_x.repos.AssociatedSubformRepository;
 import com.oop.leap_ahead_x.repos.FormStepRepository;
 import com.oop.leap_ahead_x.repos.SubformCanvasRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 
 @Service
@@ -35,12 +37,10 @@ public class AssociatedSubformService {
     }
 
     private AssociatedSubformDTO mapToDTO(final AssociatedSubform associatedSubform, final AssociatedSubformDTO associatedSubformDTO) {
-
+        associatedSubformDTO.setAssociatedId(associatedSubform.getAssociatedId());
         associatedSubformDTO.setStepUuid(associatedSubform.getStepUuid().getStepUuid());
         associatedSubformDTO.setCanvasUuid(associatedSubform.getCanvasUuid().getCanvasUuid());
         associatedSubformDTO.setPosition(associatedSubform.getPosition());
-
-
         return associatedSubformDTO;
     }
 
@@ -57,6 +57,13 @@ public class AssociatedSubformService {
         SubformCanvas subformCanvas = subformCanvasRepository.findByCanvasUuid(associatedSubformDTO.getCanvasUuid());
         associatedSubform.setCanvasUuid(subformCanvas);
         associatedSubform.setPosition(associatedSubformDTO.getPosition());
+        associatedSubform.setAssociatedId(associatedSubform.getAssociatedId());
         return associatedSubform;
     }
+
+    public void delete(final Integer associatedId) {
+        associatedSubformRepository.deleteById(associatedId);
+    }
+
+
 }
