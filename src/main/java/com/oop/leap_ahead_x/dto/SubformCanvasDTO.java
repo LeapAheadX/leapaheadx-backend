@@ -21,7 +21,6 @@ public class SubformCanvasDTO {
     @NotNull
     private UUID createdBy;
 
-    @NotNull
     private OffsetDateTime dateCreated;
 
     public UUID getCanvasUuid() {
