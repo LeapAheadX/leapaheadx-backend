@@ -180,6 +180,7 @@ public class FormStepService {
             JSONArray associatedSubformsArray = new JSONArray();
             for (AssociatedSubform associatedSubform : associatedSubforms) {
                 JSONObject associatedSubformsObjects = new JSONObject();
+                associatedSubformsObjects.put("associatedSubformsId", associatedSubform.getAssociatedId());
                 associatedSubformsObjects.put("name", associatedSubform.getCanvasUuid().getCanvasUuid());
                 associatedSubformsObjects.put("position", associatedSubform.getPosition());
                 associatedSubformsArray.put(associatedSubformsObjects);

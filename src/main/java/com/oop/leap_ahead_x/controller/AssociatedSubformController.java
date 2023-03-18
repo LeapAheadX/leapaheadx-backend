@@ -31,4 +31,12 @@ public class AssociatedSubformController {
         return new ResponseEntity<>(associatedSubformService.create(associatedSubformDTO), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{associatedSubformsId}")
+    @ApiResponse(responseCode = "204")
+    public ResponseEntity<Void> deleteFormWorkflow(
+            @PathVariable(name = "associatedSubformsId") final Integer associatedId) {
+        associatedSubformService.delete(associatedId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
