@@ -13,6 +13,7 @@ import com.oop.leap_ahead_x.repos.FormWorkflowRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -165,9 +166,10 @@ public class FormStepService {
 
     public ResponseEntity<String> getAllstepDetailsByParentform(final UUID parentform_Uuid){
         JSONArray outerArray = new JSONArray();
-        FormWorkflow form = formWorkflowRepository.getReferenceById(parentform_Uuid);
-        List<FormStep> formSteps = formStepRepository.findByParentForm(form);
+        Optional<FormWorkflow> form = formWorkflowRepository.findById(parentform_Uuid);
+        List<FormStep> formSteps = formStepRepository.findByParentForm(form.get());
         JSONObject formObjects = new JSONObject();
+        formObjects.put("workflowName", form.get().getName());
         formObjects.put("workflowUuid", parentform_Uuid);
         JSONArray formStepArray = new JSONArray();
         for (FormStep formStep: formSteps) {
