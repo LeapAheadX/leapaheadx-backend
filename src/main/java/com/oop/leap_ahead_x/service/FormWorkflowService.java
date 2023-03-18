@@ -2,6 +2,7 @@ package com.oop.leap_ahead_x.service;
 
 import com.oop.leap_ahead_x.domain.*;
 import com.oop.leap_ahead_x.dto.FormWorkflowDTO;
+import com.oop.leap_ahead_x.dto.FormWorkflowDTO_Post;
 import com.oop.leap_ahead_x.repos.*;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.json.JSONObject;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Service
@@ -55,16 +58,16 @@ public class FormWorkflowService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public UUID create(final FormWorkflowDTO formWorkflowDTO) {
+    public UUID create(final FormWorkflowDTO_Post formWorkflowDTO_post) {
         final FormWorkflow formWorkflow = new FormWorkflow();
-        mapToEntity(formWorkflowDTO, formWorkflow);
+        mapToEntity(formWorkflowDTO_post, formWorkflow);
         return formWorkflowRepository.save(formWorkflow).getFormUuid();
     }
 
-    public void update(final UUID formUuid, final FormWorkflowDTO formWorkflowDTO) {
+    public void update(final UUID formUuid, final FormWorkflowDTO_Post formWorkflowDTO_post) {
         final FormWorkflow formWorkflow = formWorkflowRepository.findById(formUuid)
                 .orElseThrow(NotFoundException::new);
-        mapToEntity(formWorkflowDTO, formWorkflow);
+        mapToEntity(formWorkflowDTO_post, formWorkflow);
         formWorkflowRepository.save(formWorkflow);
     }
 
@@ -78,14 +81,20 @@ public class FormWorkflowService {
         formWorkflowDTO.setName(formWorkflow.getName());
         formWorkflowDTO.setDescription(formWorkflow.getDescription());
         formWorkflowDTO.setCreatedBy(formWorkflow.getCreatedBy() == null ? null : formWorkflow.getCreatedBy().getAdminUuid());
+        OffsetDateTime dateTime = formWorkflow.getDateCreated();
+        // create a formatter to format the date string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        // format the date string
+        String formattedDateTime = formatter.format(dateTime);
+        formWorkflowDTO.setDateCreated(formattedDateTime);
         return formWorkflowDTO;
     }
 
-    private FormWorkflow mapToEntity(final FormWorkflowDTO formWorkflowDTO,
+    private FormWorkflow mapToEntity(final FormWorkflowDTO_Post formWorkflowDTO_post,
                                      final FormWorkflow formWorkflow) {
-        formWorkflow.setName(formWorkflowDTO.getName());
-        formWorkflow.setDescription(formWorkflowDTO.getDescription());
-        final Admin createdBy = formWorkflowDTO.getCreatedBy() == null ? null : adminRepository.findById(formWorkflowDTO.getCreatedBy())
+        formWorkflow.setName(formWorkflowDTO_post.getName());
+        formWorkflow.setDescription(formWorkflowDTO_post.getDescription());
+        final Admin createdBy = formWorkflowDTO_post.getCreatedBy() == null ? null : adminRepository.findById(formWorkflowDTO_post.getCreatedBy())
                 .orElseThrow(() -> new NotFoundException("createdBy not found"));
         formWorkflow.setCreatedBy(createdBy);
         return formWorkflow;

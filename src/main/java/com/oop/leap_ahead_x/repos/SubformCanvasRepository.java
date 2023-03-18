@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubformCanvasRepository extends JpaRepository<SubformCanvas, UUID> {
+    SubformCanvas findByCanvasUuid(UUID canvasUuid);
 }

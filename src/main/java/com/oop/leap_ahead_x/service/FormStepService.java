@@ -91,10 +91,6 @@ public class FormStepService {
         return formStepDTO;
     }
 
-
-
-
-
     private FormStep mapToEntity(final FormStepDTO formStepDTO, final FormStep formStep) {
         formStep.setAssigneeType(formStepDTO.getAssigneeType());
         formStep.setOrderNo(formStepDTO.getOrderNo());
@@ -143,7 +139,6 @@ public class FormStepService {
         JSONArray outerArray = new JSONArray();
         FormStep formStep = formStepRepository.getReferenceById(step);
         JSONObject formObjects = new JSONObject();
-
         formObjects.put("stepUuid", formStep.getStepUuid());
         formObjects.put("assigneeType", formStep.getAssigneeType());
         formObjects.put("action", formStep.getAction());
@@ -165,6 +160,36 @@ public class FormStepService {
         String jsonString = outerArray.toString();
 
 
+        return ResponseEntity.ok(jsonString);
+    }
+
+    public ResponseEntity<String> getAllstepDetailsByParentform(final UUID parentform_Uuid){
+        JSONArray outerArray = new JSONArray();
+        FormWorkflow form = formWorkflowRepository.getReferenceById(parentform_Uuid);
+        List<FormStep> formSteps = formStepRepository.findByParentForm(form);
+        JSONObject formObjects = new JSONObject();
+        formObjects.put("workflowUuid", parentform_Uuid);
+        JSONArray formStepArray = new JSONArray();
+        for (FormStep formStep: formSteps) {
+            JSONObject formStepObjects = new JSONObject();
+            formStepObjects.put("stepUuid", formStep.getStepUuid());
+            formStepObjects.put("assigneeType", formStep.getAssigneeType());
+            formStepObjects.put("action", formStep.getAction());
+            formStepObjects.put("orderNo", formStep.getOrderNo());
+            List<AssociatedSubform> associatedSubforms = associatedSubformRepository.findByStepUuid(formStep);
+            JSONArray associatedSubformsArray = new JSONArray();
+            for (AssociatedSubform associatedSubform : associatedSubforms) {
+                JSONObject associatedSubformsObjects = new JSONObject();
+                associatedSubformsObjects.put("name", associatedSubform.getCanvasUuid().getCanvasUuid());
+                associatedSubformsObjects.put("position", associatedSubform.getPosition());
+                associatedSubformsArray.put(associatedSubformsObjects);
+            }
+            formStepObjects.put("associatedSubform", associatedSubformsArray);
+            formStepArray.put(formStepObjects);
+        }
+        formObjects.put("formSteps", formStepArray);
+        outerArray.put(formObjects);
+        String jsonString = outerArray.toString();
         return ResponseEntity.ok(jsonString);
     }
 
