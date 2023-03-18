@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public class AssociatedSubformDTO {
 
+    private Integer associatedId;
     private Integer position;
 
     @NotNull
@@ -13,6 +14,14 @@ public class AssociatedSubformDTO {
 
     @NotNull
     private UUID canvasUuid;
+
+    public Integer getAssociatedId() {
+        return associatedId;
+    }
+
+    public void setAssociatedId(Integer associatedId) {
+        this.associatedId = associatedId;
+    }
 
     public Integer getPosition() {
         return position;
