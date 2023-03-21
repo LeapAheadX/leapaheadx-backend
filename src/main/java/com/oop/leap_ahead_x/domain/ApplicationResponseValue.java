@@ -13,8 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @IdClass(UniqueApplicationResponseID.class)
 public class ApplicationResponseValue {
 
-
-    @Column(nullable = false)
+    @Column
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)
