@@ -7,9 +7,7 @@ import java.util.UUID;
 
 public class ApplicationResponseValueDTO {
 
-    private Integer responseId;
 
-    @NotNull
     @Size(max = 255)
     private String value;
 
@@ -22,13 +20,6 @@ public class ApplicationResponseValueDTO {
     @NotNull
     private UUID componentUuid;
 
-    public Integer getResponseId() {
-        return responseId;
-    }
-
-    public void setResponseId(final Integer responseId) {
-        this.responseId = responseId;
-    }
 
     public String getValue() {
         return value;
