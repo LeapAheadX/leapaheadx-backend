@@ -34,7 +34,7 @@ public class Vendor {
     @Column
     private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id", nullable = false)
     private User uId;
 
