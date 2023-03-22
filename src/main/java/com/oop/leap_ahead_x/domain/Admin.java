@@ -28,7 +28,7 @@ public class Admin {
     @Column
     private String country;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id", nullable = false, unique = true)
     private User uId;
 

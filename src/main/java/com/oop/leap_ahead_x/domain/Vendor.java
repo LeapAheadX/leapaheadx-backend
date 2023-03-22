@@ -36,7 +36,7 @@ public class Vendor {
     @Column(unique=true)
     private String gstNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id", nullable = false, unique = true)
     private User uId;
 

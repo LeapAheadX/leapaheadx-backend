@@ -23,7 +23,7 @@ public class Approver {
     @Column
     private Integer approvalTier;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id", nullable = false, unique = true)
     private User uId;
 

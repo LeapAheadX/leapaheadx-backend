@@ -36,13 +36,13 @@ public class User {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "uId", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
     private Admin uIdAdmin;
 
-    @OneToOne(mappedBy = "uId", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
     private Approver uIdApprover;
 
-    @OneToOne(mappedBy = "uId", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
     private Vendor uIdVendor;
 
     @CreatedDate
