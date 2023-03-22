@@ -94,83 +94,110 @@ public class ApplicationService {
     @Transactional
     public void vendorSubmit(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("Pending");
-        int currentStep = application.getCurrentStepNo()+1;
-        application.setCurrentStepNo(currentStep);
+        FormWorkflow form = application.getFormUuid();
+        int newStep = application.getCurrentStepNo()+1;
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
+        String userType = assignee.getAssigneeType();
+        if(userType.equals("admin")){
+            application.setStatus("Pending");
+        }else if(userType.equals("approver")) {
+            application.setStatus("Escalated");
+        }
+        application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
     }
 
     @Transactional
-    public void adminReject(UUID aId){
+    public void adminReject(final UUID aId,String comments){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("InProgress");
-        int currentStep = application.getCurrentStepNo()-1;
-        application.setCurrentStepNo(currentStep);
+        FormWorkflow form = application.getFormUuid();
+        int newStep = application.getCurrentStepNo()-1;
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
+        application.setComment(comments);
+        String userType = assignee.getAssigneeType();
+        if(userType.equals("vendor")){
+            application.setStatus("InProgress");
+        }else if(userType.equals("approver")){
+            application.setStatus("Escalated");
+        }else{
+            application.setStatus("Pending");
+        }
+        application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
     }
 
     @Transactional
     public void adminSubmit(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("Escalated");
-        int currentStep = application.getCurrentStepNo()+1;
-        application.setCurrentStepNo(currentStep);
+        FormWorkflow form = application.getFormUuid();
+        int newStep = application.getCurrentStepNo()+1;
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
+        String userType = assignee.getAssigneeType();
+        if(userType.equals("vendor")){
+            application.setStatus("InProgress");
+        }else{
+            application.setStatus("Escalated");
+        }
+        application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
     }
 
     @Transactional
-    public void approverReject(UUID aId){
+    public void approverReject(UUID aId, String comments){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("Pending");
-        int currentStep = application.getCurrentStepNo()-1;
-        application.setCurrentStepNo(currentStep);
+        FormWorkflow form = application.getFormUuid();
+        int newStep = application.getCurrentStepNo()-1;
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
+        application.setComment(comments);
+        String userType = assignee.getAssigneeType();
+        if(userType.equals("vendor")){
+            application.setStatus("InProgress");
+        }else if(userType.equals("admin")){
+            application.setStatus("Pending");
+        }else{
+            application.setStatus("Escalated");
+        }
+        application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
     }
 
     @Transactional
     public void approverApprove(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
+        FormWorkflow form = application.getFormUuid();
+        int currentStep = application.getCurrentStepNo();
+        FormStep step = formStepRepository.findByParentFormAndAction(form,"Check and Approve");
+        int maxStep = step.getOrderNo();
+        if(currentStep != maxStep) {
+            int newStep = currentStep+1;
+            FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form, newStep);
+            String userType = assignee.getAssigneeType();
+            if (userType.equals("vendor")) {
+                application.setStatus("InProgress");
+            } else if (userType.equals("admin")) {
+                application.setStatus("Pending");
+            }
+            application.setCurrentStepNo(newStep);
+        }
         application.setStatus("Completed");
         applicationRepository.save(application);
     }
 
     @Transactional
-    public ResponseEntity<String> getAssignedApplication(final UUID uId) {
+    public void archive(UUID aId){
+        Application application = applicationRepository.getReferenceById(aId);
+        application.setStatus("Hidden");
+        applicationRepository.save(application);
+    }
+
+    @Transactional
+    public ResponseEntity<String> getAssignedSubcanvas(final int currentStep, final UUID fId) {
         JSONArray outerArray = new JSONArray();
-        String assigneeType = userRepository.getReferenceById(uId).getRole();
-        List<Application> applications = applicationRepository.findAll();
-        for (Application application : applications) {
-            FormWorkflow form = formWorkflowRepository.getReferenceById(application.getFormUuid().getFormUuid());
-            int currentStep = application.getCurrentStepNo();
-            Vendor createdFor = application.getCreatedFor();
-            //find steps using parentForm
-            List<FormStep> steps = formStepRepository.findByParentForm(form);
-            for (FormStep step : steps) {
-                //check if orderNumber == currentstep and the currentUserType is the same
-                if (step.getOrderNo().equals(currentStep) && step.getAssigneeType().equals(assigneeType)) {
-                    if(step.getAssigneeType().equals("vendor")) {
-                        UUID vendorUserId = application.getCreatedFor().getUId().getUId();
-                        if(vendorUserId==uId) {
-                            JSONObject canvaObject = new JSONObject();
-                            //if same, return form
-                            //Go associated subform and get the subcanvas id that it needs to fill up
-                            List<AssociatedSubform> canvas = associatedSubformRepository.findByStepUuid(step);
-                            JSONArray canvaFillupNotRestricted = new JSONArray();
-                            for (AssociatedSubform canva : canvas) {
-                                canvaFillupNotRestricted.put(canva.getCanvasUuid().getCanvasUuid());
-                            }
-                            //an arrray that shows what subcanvas this user is able to edit
-                            canvaObject.put("canvaFillUpNotRestricted", canvaFillupNotRestricted);
-                            canvaObject.put("applicationID", application.getApplicationUuid());
-                            canvaObject.put("applicationStatus", application.getStatus());
-                            canvaObject.put("currentStep", application.getCurrentStepNo());
-                            canvaObject.put("formId", form.getFormUuid());
-                            canvaObject.put("formName", form.getName());
-                            canvaObject.put("vendorId", createdFor.getVendorUuid());
-                            canvaObject.put("userId", vendorUserId);
-                            outerArray.put(canvaObject);
-                        }
-                    }else{
+        FormWorkflow form = formWorkflowRepository.getReferenceById(fId);
+        List<FormStep> steps = formStepRepository.findByParentForm(form);
+        for (FormStep step : steps) {
+            //check if orderNumber == currentstep and the currentUserType is the same
+            if (step.getOrderNo().equals(currentStep) && step.getParentForm().equals(form)) {
                         JSONObject canvaObject = new JSONObject();
                         //if same, return form
                         //Go associated subform and get the subcanvas id that it needs to fill up
@@ -181,15 +208,9 @@ public class ApplicationService {
                         }
                         //an arrray that shows what subcanvas this user is able to edit
                         canvaObject.put("canvaFillUpNotRestricted", canvaFillupNotRestricted);
-                        canvaObject.put("applicationID", application.getApplicationUuid());
-                        canvaObject.put("applicationStatus", application.getStatus());
-                        canvaObject.put("currentStep", application.getCurrentStepNo());
                         canvaObject.put("formId", form.getFormUuid());
                         canvaObject.put("formName", form.getName());
-                        canvaObject.put("vendorId", createdFor.getVendorUuid());
                         outerArray.put(canvaObject);
-                    }
-                }
             }
         }
         String jsonString = outerArray.toString();
