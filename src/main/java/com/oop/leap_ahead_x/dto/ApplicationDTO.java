@@ -1,9 +1,7 @@
 package com.oop.leap_ahead_x.dto;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
-
 
 public class ApplicationDTO {
 
@@ -33,10 +31,18 @@ public class ApplicationDTO {
 //    @NotNull
 //    private UUID createdFor;
 
-//    @NotNull
+    //    @NotNull
 //    private UUID formUuid;
+    @NotNull
+    private String dueDate;
 
+    public String getDueDate() {
+        return dueDate;
+    }
 
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public UUID getApplicationUuid() {
         return applicationUuid;
