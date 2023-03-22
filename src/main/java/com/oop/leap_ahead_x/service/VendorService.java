@@ -58,13 +58,19 @@ public class VendorService {
         vendorDTO.setVendorUuid(vendor.getVendorUuid());
         vendorDTO.setCompany(vendor.getCompany());
         vendorDTO.setCountry(vendor.getCountry());
-//        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
+        vendorDTO.setBusinessNature(vendor.getBusinessNature());
+        vendorDTO.setGstNumber(vendor.getGstNumber());
+        vendorDTO.setCompanyRegistrationNo(vendor.getCompanyRegistrationNo());
+        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
         return vendorDTO;
     }
 
     private Vendor mapToEntity(final VendorDTO vendorDTO, final Vendor vendor) {
         vendor.setCompany(vendorDTO.getCompany());
         vendor.setCountry(vendorDTO.getCountry());
+        vendor.setBusinessNature(vendorDTO.getBusinessNature());
+        vendor.setGstNumber(vendorDTO.getGstNumber());
+        vendor.setCompanyRegistrationNo(vendorDTO.getCompanyRegistrationNo());
         final User uId = vendorDTO.getUId() == null ? null : userRepository.findById(vendorDTO.getUId())
                 .orElseThrow(() -> new NotFoundException("uId not found"));
         vendor.setUId(uId);

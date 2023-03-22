@@ -23,6 +23,14 @@ public class UserDTO {
     @Size(max = 50)
     private String role;
 
+    @NotNull
+    @Size(max=255)
+    private String name;
+
+    @NotNull
+    @Size(max = 100)
+    private String phoneNumber;
+
     public UUID getUId() {
         return uId;
     }
@@ -55,4 +63,19 @@ public class UserDTO {
         this.role = role;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
