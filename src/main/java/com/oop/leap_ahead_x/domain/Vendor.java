@@ -34,6 +34,15 @@ public class Vendor {
     @Column
     private String country;
 
+    @Column(unique=true)
+    private String companyRegistrationNo;
+
+    @Column
+    private String businessNature;
+
+    @Column(unique=true)
+    private String gstNumber;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "u_id", nullable = false)
     private User uId;
@@ -71,6 +80,30 @@ public class Vendor {
 
     public void setCountry(final String country) {
         this.country = country;
+    }
+
+    public String getCompanyRegistrationNo() {
+        return companyRegistrationNo;
+    }
+
+    public void setCompanyRegistrationNo(String companyRegistrationNo) {
+        this.companyRegistrationNo = companyRegistrationNo;
+    }
+
+    public String getBusinessNature() {
+        return businessNature;
+    }
+
+    public void setBusinessNature(String businessNature) {
+        this.businessNature = businessNature;
+    }
+
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
     }
 
     public User getUId() {
