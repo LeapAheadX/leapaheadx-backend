@@ -61,7 +61,7 @@ public class VendorService {
         vendorDTO.setBusinessNature(vendor.getBusinessNature());
         vendorDTO.setGstNumber(vendor.getGstNumber());
         vendorDTO.setCompanyRegistrationNo(vendor.getCompanyRegistrationNo());
-//        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
+        vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
         return vendorDTO;
     }
 
