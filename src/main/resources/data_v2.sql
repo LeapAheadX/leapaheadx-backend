@@ -15,16 +15,16 @@ VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2
 
 
 -- Assignment of Users to Admins
-INSERT INTO admin (admin_uuid, u_id, department, country, date_created, last_updated) 
+INSERT INTO admin (admin_uuid, u_id, department, country, date_created, last_updated)
 VALUES ('79ebaf36-bd58-11ed-afa1-0242ac120002', '79eb9b5e-bd58-11ed-afa1-0242ac120002' , 'OPS', 'Singapore', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO admin (admin_uuid, u_id, department, country, date_created, last_updated) 
+INSERT INTO admin (admin_uuid, u_id, department, country, date_created, last_updated)
 VALUES ('79ebb09e-bd58-11ed-afa1-0242ac120002', '79eb9e38-bd58-11ed-afa1-0242ac120002' , 'Legal', 'Malaysia', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Assignment of Users to Approver
 
-INSERT INTO approver (approver_uuid, u_id, approval_tier, date_created, last_updated) 
+INSERT INTO approver (approver_uuid, u_id, approval_tier, date_created, last_updated)
 VALUES ('79ebb238-bd58-11ed-afa1-0242ac120002', '79eb9fd2-bd58-11ed-afa1-0242ac120002', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO approver (approver_uuid, u_id, approval_tier, date_created, last_updated) 
+INSERT INTO approver (approver_uuid, u_id, approval_tier, date_created, last_updated)
 VALUES ('79ebb3aa-bd58-11ed-afa1-0242ac120002', '79eba1a8-bd58-11ed-afa1-0242ac120002', '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Assignment of Users to Vendor
@@ -35,13 +35,13 @@ INSERT INTO vendor (vendor_uuid, u_id, company, country, company_registration_no
 VALUES ('79ebb7ec-bd58-11ed-afa1-0242ac120002', '79ebad60-bd58-11ed-afa1-0242ac120002', 'NTU', 'Singapore', '12312312233', 'Sleeping', '23456232789', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert Form_workflows
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated) 
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
 VALUES ('79ebc39a-bd58-11ed-afa1-0242ac120002', 'TestOne','This is a test form to mock the first one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated) 
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
 VALUES ('79ebc5a2-bd58-11ed-afa1-0242ac120002', 'TestTwo','This is a test form to mock the second one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated) 
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
 VALUES ('79ebcc0a-bd58-11ed-afa1-0242ac120002', 'TestThree','This is a test form to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert subformCanvas
@@ -114,40 +114,40 @@ VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ebcfc0-bd58-11ed-afa1-0242ac1
 INSERT INTO input_component(component_uuid,parent_canvas,question,type,is_required,order_no, date_created, last_updated)
 VALUES ('79ebf608-bd58-11ed-afa1-0242ac120002', '79ebd182-bd58-11ed-afa1-0242ac120002', 'Gender', 'checkbox', TRUE, '4',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
 
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated) 
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
 VALUES ('79ebfb9e-bd58-11ed-afa1-0242ac120002', 'Male', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated) 
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
 VALUES ('79ebfd24-bd58-11ed-afa1-0242ac120002', 'Female', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated) 
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
 VALUES ('79ebfe78-bd58-11ed-afa1-0242ac120002', 'Low', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated) 
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
 VALUES ('79ec0044-bd58-11ed-afa1-0242ac120002', 'Medium', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated) 
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
 VALUES ('79ec01fc-bd58-11ed-afa1-0242ac120002', 'High', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO  option_component_link(component_uuid, option_uuid) 
+INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf608-bd58-11ed-afa1-0242ac120002', '79ebfb9e-bd58-11ed-afa1-0242ac120002');
-INSERT INTO  option_component_link(component_uuid, option_uuid) 
+INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf608-bd58-11ed-afa1-0242ac120002', '79ebfd24-bd58-11ed-afa1-0242ac120002');
-INSERT INTO  option_component_link(component_uuid, option_uuid) 
+INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ebfe78-bd58-11ed-afa1-0242ac120002');
-INSERT INTO  option_component_link(component_uuid, option_uuid) 
+INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ec0044-bd58-11ed-afa1-0242ac120002');
-INSERT INTO  option_component_link(component_uuid, option_uuid) 
+INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ec01fc-bd58-11ed-afa1-0242ac120002');
 
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec03aa-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec053a-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec0da0-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec0f4e-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec10a2-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated)
-VALUES ('79ec1232-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec03aa-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec053a-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec0da0-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec0f4e-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec10a2-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date)
+VALUES ('79ec1232-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553');
 
 INSERT INTO application_response_value (application_uuid, canvas_uuid,component_uuid,value, date_created, last_updated)
 VALUES('79ec03aa-bd58-11ed-afa1-0242ac120002','79ebce12-bd58-11ed-afa1-0242ac120002', '79ebf1ee-bd58-11ed-afa1-0242ac120002', 'Jeff', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
