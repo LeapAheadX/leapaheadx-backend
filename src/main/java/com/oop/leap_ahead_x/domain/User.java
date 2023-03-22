@@ -21,7 +21,7 @@ public class User {
     @GeneratedValue(generator = "uuid")
     private UUID uId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, length = 50)
@@ -35,6 +35,9 @@ public class User {
 
     @Column(nullable = false)
     private String phoneNumber;
+
+    @Column(nullable = false)
+    private Boolean isDisabled;
 
     @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
     private Admin uIdAdmin;
@@ -109,6 +112,13 @@ public class User {
         this.uIdVendor = uIdVendor;
     }
 
+    public Boolean getDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        isDisabled = disabled;
+    }
 
     public OffsetDateTime getDateCreated() {
         return dateCreated;

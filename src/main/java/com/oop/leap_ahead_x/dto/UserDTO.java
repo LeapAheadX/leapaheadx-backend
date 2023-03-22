@@ -31,6 +31,10 @@ public class UserDTO {
     @Size(max = 100)
     private String phoneNumber;
 
+    @NotNull
+    @JsonProperty("isDisabled")
+    private Boolean isDisabled;
+
     public UUID getUId() {
         return uId;
     }
@@ -77,5 +81,13 @@ public class UserDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        isDisabled = disabled;
     }
 }

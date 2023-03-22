@@ -1,17 +1,17 @@
 USE leap_ahead_x;
 -- Insertion of Users
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin','98765432', 'Jeff', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin', '98765432', 'Ray',  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79eb9fd2-bd58-11ed-afa1-0242ac120002','approver@gmail.com', MD5('approver'), 'approver', '98765432', 'Xav', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver','98765432', 'Mau',  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79ebaad6-bd58-11ed-afa1-0242ac120002','vendor@gmail.com', MD5('vendor'), 'vendor', '98765432', 'Aaro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
-VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor', '98765432', 'Tif', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin','98765432', 'Jeff',false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin', '98765432', 'Ray', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79eb9fd2-bd58-11ed-afa1-0242ac120002','approver@gmail.com', MD5('approver'), 'approver', '98765432', 'Xav',false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver','98765432', 'Mau',false,  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79ebaad6-bd58-11ed-afa1-0242ac120002','vendor@gmail.com', MD5('vendor'), 'vendor', '98765432', 'Aaro',false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, is_disabled, date_created, last_updated)
+VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor', '98765432', 'Tif',false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- Assignment of Users to Admins
