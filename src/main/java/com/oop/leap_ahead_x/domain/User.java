@@ -34,6 +34,12 @@ public class User {
     @Column(nullable = false, name = "\"role\"", length = 50)
     private String role;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "uId")
     private Set<Admin> uIdAdmins;
 
@@ -123,4 +129,19 @@ public class User {
         this.lastUpdated = lastUpdated;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
