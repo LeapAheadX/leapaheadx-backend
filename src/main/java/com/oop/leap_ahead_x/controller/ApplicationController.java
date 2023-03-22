@@ -5,6 +5,7 @@ import com.oop.leap_ahead_x.service.ApplicationService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,12 +34,12 @@ public class ApplicationController {
         return ResponseEntity.ok(applicationService.get(applicationUuid));
     }
 
-    //Get an array of subcanvas id which needs to be filled up by the assigned person for a particular application. returns the form Id which is used to render the form
+    //Get an array of subcanvas id which needs to be filled up by the assigned person at the current step. returns the form Id which is used to render the form
     //http://localhost:8080/api/applications/79ec03aa-bd58-11ed-afa1-0242ac120002/user/79ebaad6-bd58-11ed-afa1-0242ac120002
-    @GetMapping("/user/{uId}")
-    public ResponseEntity<String> getAssignedApplication(
-            @PathVariable(name = "uId") final UUID uId) {
-        return applicationService.getAssignedApplication(uId);
+    @GetMapping("/{step}/{fId}")
+    public ResponseEntity<String> getAssignedSubcanvas(
+            @PathVariable(name = "step") final int step,@PathVariable(name = "fId") final UUID fId) {
+        return applicationService.getAssignedSubcanvas(step,fId);
     }
 
     //Get an array of applicationID,formID,formName,status,currentstepNumber based on the vendorID
@@ -83,10 +84,9 @@ public class ApplicationController {
 
     //Admin reject application
     @PutMapping("/adminReject/{aId}")
-    public ResponseEntity<Void> adminReject(
-            @PathVariable(name = "aId") final UUID aId) {
-        applicationService.adminReject(aId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> adminReject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
+        applicationService.adminReject(aId, requestBody.get("comments"));
+        return ResponseEntity.ok("Comments updated successfully");
     }
 
     //Admin submit application
@@ -99,11 +99,11 @@ public class ApplicationController {
 
     //Approver reject application
     @PutMapping("/approverReject/{aId}")
-    public ResponseEntity<Void> approverReject(
-            @PathVariable(name = "aId") final UUID aId) {
-        applicationService.approverReject(aId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> approverReject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
+        applicationService.approverReject(aId, requestBody.get("comments"));
+        return ResponseEntity.ok("Comments updated successfully");
     }
+
 
     //Approver approve application
     @PutMapping("/approverApprove/{aId}")
@@ -112,12 +112,11 @@ public class ApplicationController {
         applicationService.approverApprove(aId);
         return ResponseEntity.ok().build();
     }
-    //delete application based on application Id.
-    @DeleteMapping("/{applicationUuid}")
-    @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteApplication(
+    //archive application based on application Id.
+    @PutMapping("/archive/{applicationUuid}")
+    public ResponseEntity<Void> archiveApplication(
             @PathVariable(name = "applicationUuid") final UUID applicationUuid) {
-        applicationService.delete(applicationUuid);
+        applicationService.archive(applicationUuid);
         return ResponseEntity.noContent().build();
     }
 
