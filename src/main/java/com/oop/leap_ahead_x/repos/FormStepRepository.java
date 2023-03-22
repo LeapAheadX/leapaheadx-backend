@@ -15,5 +15,5 @@ public interface FormStepRepository extends JpaRepository<FormStep, UUID> {
     FormStep findByParentFormAndAction(FormWorkflow form,String action);
 
     FormStep findByStepUuid(UUID formstep);
-    FormStep findByParentFormAndOrderNo(FormWorkflow form,int orderNo);
+    FormStep findByParentFormAndOrderNo(FormWorkflow form, int orderNo);
 }
