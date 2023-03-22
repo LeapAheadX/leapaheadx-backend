@@ -1,13 +1,13 @@
 package com.oop.leap_ahead_x.service;
-
 import com.oop.leap_ahead_x.domain.*;
 import com.oop.leap_ahead_x.dto.ApplicationDTO;
 import com.oop.leap_ahead_x.repos.*;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import jakarta.transaction.Transactional;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -299,6 +299,14 @@ public class ApplicationService {
         Optional<FormWorkflow> formWorkflow = formWorkflowRepository.findById(application.getFormUuid().getFormUuid());
         applicationDTO.setFormName(formWorkflow.get().getName());
 //        applicationDTO.setFormUuid(application.getFormUuid() == null ? null : application.getFormUuid().getFormUuid());
+
+        // added duedate
+        OffsetDateTime dateTime = application.getDueDate();
+        // create a formatter to format the date string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        // format the date string
+        String formattedDateTime = formatter.format(dateTime);
+        applicationDTO.setDueDate(formattedDateTime);
         return applicationDTO;
     }
 
@@ -319,6 +327,11 @@ public class ApplicationService {
 
         final FormWorkflow formUuid = applicationDTO.getFormName() == null ? null : formWorkflowRepository.findByFormName(applicationDTO.getFormName());
         application.setFormUuid(formUuid);
+
+        // added duedate
+        String dateString = applicationDTO.getDueDate();
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(dateString, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        application.setDueDate(offsetDateTime);
         return application;
     }
 
