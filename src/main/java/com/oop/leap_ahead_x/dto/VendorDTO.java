@@ -1,7 +1,6 @@
 package com.oop.leap_ahead_x.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
@@ -57,6 +56,30 @@ public class VendorDTO {
 
     public void setCountry(final String country) {
         this.country = country;
+    }
+
+    public String getCompanyRegistrationNo() {
+        return companyRegistrationNo;
+    }
+
+    public void setCompanyRegistrationNo(String companyRegistrationNo) {
+        this.companyRegistrationNo = companyRegistrationNo;
+    }
+
+    public String getBusinessNature() {
+        return businessNature;
+    }
+
+    public void setBusinessNature(String businessNature) {
+        this.businessNature = businessNature;
+    }
+
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
     }
 
     public UUID getUId() {
