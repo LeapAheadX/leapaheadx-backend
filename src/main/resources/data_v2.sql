@@ -1,17 +1,17 @@
 USE leap_ahead_x;
 -- Insertion of Users
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eb9fd2-bd58-11ed-afa1-0242ac120002','approver@gmail.com', MD5('approver'), 'approver', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79ebaad6-bd58-11ed-afa1-0242ac120002','vendor@gmail.com', MD5('vendor'), 'vendor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO user (u_id, email, password, role, date_created, last_updated) 
-VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79eb9b5e-bd58-11ed-afa1-0242ac120002','admin@gmail.com', MD5('admin'), 'admin','98765432', 'Jeff', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79eb9e38-bd58-11ed-afa1-0242ac120002','admin2@gmail.com', MD5('admin2'), 'admin', '98765432', 'Ray',  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79eb9fd2-bd58-11ed-afa1-0242ac120002','approver@gmail.com', MD5('approver'), 'approver', '98765432', 'Xav', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79eba1a8-bd58-11ed-afa1-0242ac120002','approver2@gmail.com', MD5('approver2'), 'approver','98765432', 'Mau',  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79ebaad6-bd58-11ed-afa1-0242ac120002','vendor@gmail.com', MD5('vendor'), 'vendor', '98765432', 'Aaro', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO user (u_id, email, password, role, phone_number, name, date_created, last_updated)
+VALUES ('79ebad60-bd58-11ed-afa1-0242ac120002','vendor2@gmail.com', MD5('vendor2'), 'vendor', '98765432', 'Tif', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 
 -- Assignment of Users to Admins
@@ -28,11 +28,11 @@ INSERT INTO approver (approver_uuid, u_id, approval_tier, date_created, last_upd
 VALUES ('79ebb3aa-bd58-11ed-afa1-0242ac120002', '79eba1a8-bd58-11ed-afa1-0242ac120002', '2', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Assignment of Users to Vendor
-INSERT INTO vendor (vendor_uuid, u_id, company, country, date_created, last_updated) 
-VALUES ('79ebb4e0-bd58-11ed-afa1-0242ac120002', '79ebaad6-bd58-11ed-afa1-0242ac120002', 'SMU', 'Singapore', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO vendor (vendor_uuid, u_id, company, country, company_registration_no, business_nature, gst_number, date_created, last_updated)
+VALUES ('79ebb4e0-bd58-11ed-afa1-0242ac120002', '79ebaad6-bd58-11ed-afa1-0242ac120002', 'SMU', 'Singapore', '123123123', 'Sleeping', '23456789', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
-INSERT INTO vendor (vendor_uuid, u_id, company, country, date_created, last_updated) 
-VALUES ('79ebb7ec-bd58-11ed-afa1-0242ac120002', '79ebad60-bd58-11ed-afa1-0242ac120002', 'NTU', 'Singapore', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO vendor (vendor_uuid, u_id, company, country, company_registration_no, business_nature, gst_number, date_created, last_updated)
+VALUES ('79ebb7ec-bd58-11ed-afa1-0242ac120002', '79ebad60-bd58-11ed-afa1-0242ac120002', 'NTU', 'Singapore', '12312312233', 'Sleeping', '23456232789', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert Form_workflows
 INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated) 
