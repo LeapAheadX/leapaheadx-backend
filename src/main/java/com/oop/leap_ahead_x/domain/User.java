@@ -37,7 +37,7 @@ public class User {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private Boolean isDisabled;
+    private boolean isDisabled;
 
     @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
     private Admin uIdAdmin;
@@ -112,11 +112,11 @@ public class User {
         this.uIdVendor = uIdVendor;
     }
 
-    public Boolean getDisabled() {
+    public boolean isDisabled() {
         return isDisabled;
     }
 
-    public void setDisabled(Boolean disabled) {
+    public void setDisabled(boolean disabled) {
         isDisabled = disabled;
     }
 

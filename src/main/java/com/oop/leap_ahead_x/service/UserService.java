@@ -1,11 +1,14 @@
 package com.oop.leap_ahead_x.service;
 
+
 import com.oop.leap_ahead_x.domain.User;
 import com.oop.leap_ahead_x.dto.UserDTO;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +59,7 @@ public class UserService {
         userDTO.setRole(user.getRole());
         userDTO.setPhoneNumber(user.getPhoneNumber());
         userDTO.setName(user.getName());
+        userDTO.setDisabled(user.isDisabled());
         return userDTO;
     }
 
@@ -65,7 +69,19 @@ public class UserService {
         user.setRole(userDTO.getRole());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setName(userDTO.getName());
+        user.setDisabled(userDTO.getDisabled());
         return user;
     }
 
+    @Transactional
+    public void unlock(UUID uId) {
+        User user = userRepository.getReferenceById(uId);
+        user.setDisabled(false);
+    }
+
+    @Transactional
+    public void lock(UUID uId) {
+        User user = userRepository.getReferenceById(uId);
+        user.setDisabled(true);
+    }
 }

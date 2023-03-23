@@ -7,6 +7,7 @@ import com.oop.leap_ahead_x.repos.AdminRepository;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,16 @@ public class AdminService {
         return adminRepository.findById(adminUuid)
                 .map(admin -> mapToDTO(admin, new AdminDTO()))
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public AdminDTO getAdminByUID(final UUID uId){
+        Optional<User> user = userRepository.findById(uId);
+        if (user.isPresent()) {
+            UUID adminUUID = adminRepository.findByuId(user).getAdminUuid();
+            return this.get(adminUUID);
+        }else{
+            throw new NotFoundException("Not found");
+        }
     }
 
     public UUID create(final AdminDTO adminDTO) {

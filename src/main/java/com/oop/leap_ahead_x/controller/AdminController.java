@@ -34,6 +34,12 @@ public class AdminController {
         return ResponseEntity.ok(adminService.get(adminUuid));
     }
 
+    @GetMapping("find/{uId}")
+    public ResponseEntity<AdminDTO> getAdminByUID(
+            @PathVariable(name = "uId") final UUID uId) {
+        return ResponseEntity.ok(adminService.getAdminByUID(uId));
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<UUID> createAdmin(@RequestBody @Valid final AdminDTO adminDTO) {

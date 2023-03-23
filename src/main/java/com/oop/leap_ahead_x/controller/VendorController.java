@@ -1,5 +1,6 @@
 package com.oop.leap_ahead_x.controller;
 
+
 import com.oop.leap_ahead_x.dto.VendorDTO;
 import com.oop.leap_ahead_x.service.VendorService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,6 +32,12 @@ public class VendorController {
     public ResponseEntity<VendorDTO> getVendor(
             @PathVariable(name = "vendorUuid") final UUID vendorUuid) {
         return ResponseEntity.ok(vendorService.get(vendorUuid));
+    }
+
+    @GetMapping("find/{uId}")
+    public ResponseEntity<VendorDTO> getVendorByUID(
+            @PathVariable(name = "uId") final UUID uId) {
+        return ResponseEntity.ok(vendorService.getVendorByUID(uId));
     }
 
     @PostMapping

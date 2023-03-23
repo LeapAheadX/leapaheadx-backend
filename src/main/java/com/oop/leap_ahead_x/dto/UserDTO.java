@@ -33,7 +33,7 @@ public class UserDTO {
 
     @NotNull
     @JsonProperty("isDisabled")
-    private Boolean isDisabled;
+    private boolean isDisabled;
 
     public UUID getUId() {
         return uId;

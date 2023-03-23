@@ -45,6 +45,20 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/unlock/{uId}")
+    public ResponseEntity<Void> unlock(
+            @PathVariable(name = "uId") final UUID uId) {
+        userService.unlock(uId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Vendor save application
+    @PutMapping("/lock/{uId}")
+    public ResponseEntity<Void> lock(
+            @PathVariable(name = "uId") final UUID uId) {
+        userService.lock(uId);
+        return ResponseEntity.ok().build();
+    }
     @DeleteMapping("/{uId}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "uId") final UUID uId) {
