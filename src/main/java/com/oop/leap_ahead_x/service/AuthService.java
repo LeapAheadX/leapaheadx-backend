@@ -10,6 +10,9 @@ import com.oop.leap_ahead_x.repos.ApproverRepository;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import com.oop.leap_ahead_x.repos.VendorRepository;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,6 +23,7 @@ public class AuthService {
     private final AdminRepository adminRepository;
     private final ApproverRepository approverRepository;
     private final VendorRepository vendorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // Constructor
     public AuthService(UserRepository userRepository, AdminRepository adminRepository, ApproverRepository approverRepository, VendorRepository vendorRepository) {
@@ -27,6 +31,7 @@ public class AuthService {
         this.adminRepository = adminRepository;
         this.approverRepository = approverRepository;
         this.vendorRepository = vendorRepository;
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     public List<UUID> login(final String email, final String password) {
@@ -38,7 +43,7 @@ public class AuthService {
             String dBpassword = user.get().getPassword();
 
             // Check if the password is the same
-            if (password.equals(dBpassword)) {
+            if (passwordEncoder.matches(password, dBpassword)) {
 
                 // Construct the mock access token made up of [UUID, ROLE_UUID]
                 //TODO - Return an [UUID, ROLEID]
