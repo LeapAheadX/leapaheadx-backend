@@ -47,9 +47,9 @@ public class UserService {
         return userRepository.save(user).getUId();
     }
 
-
-
     public void update(final UUID uId, final UserDTO userDTO) {
+        String temp = userDTO.getPassword();
+        userDTO.setPassword(this.passwordEncoder.encode(temp));
         final User user = userRepository.findById(uId)
                 .orElseThrow(NotFoundException::new);
         mapToEntity(userDTO, user);
