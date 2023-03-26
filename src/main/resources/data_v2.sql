@@ -114,16 +114,16 @@ VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ebcfc0-bd58-11ed-afa1-0242ac1
 INSERT INTO input_component(component_uuid,parent_canvas,question,type,is_required,order_no, date_created, last_updated)
 VALUES ('79ebf608-bd58-11ed-afa1-0242ac120002', '79ebd182-bd58-11ed-afa1-0242ac120002', 'Gender', 'checkbox', TRUE, '4',CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
 
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
-VALUES ('79ebfb9e-bd58-11ed-afa1-0242ac120002', 'Male', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
-VALUES ('79ebfd24-bd58-11ed-afa1-0242ac120002', 'Female', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
-VALUES ('79ebfe78-bd58-11ed-afa1-0242ac120002', 'Low', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
-VALUES ('79ec0044-bd58-11ed-afa1-0242ac120002', 'Medium', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated)
-VALUES ('79ec01fc-bd58-11ed-afa1-0242ac120002', 'High', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated, parent_input_component)
+VALUES ('79ebfb9e-bd58-11ed-afa1-0242ac120002', 'Male', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '79ebf45a-bd58-11ed-afa1-0242ac120002');
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated, parent_input_component)
+VALUES ('79ebfd24-bd58-11ed-afa1-0242ac120002', 'Female', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '79ebf45a-bd58-11ed-afa1-0242ac120002');
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated, parent_input_component)
+VALUES ('79ebfe78-bd58-11ed-afa1-0242ac120002', 'Low', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '79ebf45a-bd58-11ed-afa1-0242ac120002');
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated, parent_input_component)
+VALUES ('79ec0044-bd58-11ed-afa1-0242ac120002', 'Medium', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '79ebf45a-bd58-11ed-afa1-0242ac120002');
+INSERT INTO  options(option_uuid, option_prompt, date_created, last_updated, parent_input_component)
+VALUES ('79ec01fc-bd58-11ed-afa1-0242ac120002', 'High', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '79ebf45a-bd58-11ed-afa1-0242ac120002');
 
 INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf608-bd58-11ed-afa1-0242ac120002', '79ebfb9e-bd58-11ed-afa1-0242ac120002');
