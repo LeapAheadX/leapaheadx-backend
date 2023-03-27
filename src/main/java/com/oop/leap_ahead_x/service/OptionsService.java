@@ -61,6 +61,7 @@ public class OptionsService {
     private OptionsDTO mapToDTO(final Options options, final OptionsDTO optionsDTO) {
         optionsDTO.setOptionUuid(options.getOptionUuid());
         optionsDTO.setOptionPrompt(options.getOptionPrompt());
+        optionsDTO.setParentInputComponent(options.getParentInputComponent());
         optionsDTO.setOptionComponentLinkInputComponents(options.getOptionComponentLinkInputComponents() == null ? null : options.getOptionComponentLinkInputComponents().stream()
                 .map(inputComponent -> inputComponent.getComponentUuid())
                 .toList());
@@ -69,6 +70,7 @@ public class OptionsService {
 
     private Options mapToEntity(final OptionsDTO optionsDTO, final Options options) {
         options.setOptionPrompt(optionsDTO.getOptionPrompt());
+        options.setParentInputComponent(optionsDTO.getParentInputComponent());
         final List<InputComponent> optionComponentLinkInputComponents = inputComponentRepository.findAllById(
                 optionsDTO.getOptionComponentLinkInputComponents() == null ? Collections.emptyList() : optionsDTO.getOptionComponentLinkInputComponents());
         if (optionComponentLinkInputComponents.size() != (optionsDTO.getOptionComponentLinkInputComponents() == null ? 0 : optionsDTO.getOptionComponentLinkInputComponents().size())) {

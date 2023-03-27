@@ -27,10 +27,11 @@ public class InputComponentController {
         return ResponseEntity.ok(inputComponentService.findAll());
     }
 
-    @GetMapping("/{componentUuid}")
-    public ResponseEntity<InputComponentDTO> getInputComponent(
-            @PathVariable(name = "componentUuid") final UUID componentUuid) {
-        return ResponseEntity.ok(inputComponentService.get(componentUuid));
+    @GetMapping("/parent-canvas/{parentCanvas}")
+    public ResponseEntity<List<InputComponentDTO>> getAllComponentsByParentCanvas(
+            @PathVariable(name = "parentCanvas") final UUID parentCanvas) {
+        List<InputComponentDTO> inputComponents = inputComponentService.getAllByParentCanvas(parentCanvas);
+        return ResponseEntity.ok(inputComponents);
     }
 
     @PostMapping
