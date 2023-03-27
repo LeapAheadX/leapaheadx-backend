@@ -6,6 +6,8 @@ import com.oop.leap_ahead_x.dto.InputComponentDTO;
 import com.oop.leap_ahead_x.repos.InputComponentRepository;
 import com.oop.leap_ahead_x.repos.SubformCanvasRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
@@ -36,6 +38,28 @@ public class InputComponentService {
                 .map(inputComponent -> mapToDTO(inputComponent, new InputComponentDTO()))
                 .orElseThrow(NotFoundException::new);
     }
+
+    public List<InputComponentDTO> getAllByParentCanvas(final UUID parentCanvas) {
+        SubformCanvas pCanvas = subformCanvasRepository.getReferenceById(parentCanvas) ;
+        List<InputComponent> inputComponents = inputComponentRepository.findByParentCanvas(pCanvas);
+
+        // convert InputComponent objects to InputComponentDTO objects
+        List<InputComponentDTO> inputComponentDTOs = new ArrayList<>();
+        for (InputComponent inputComponent : inputComponents) {
+            InputComponentDTO inputComponentDTO = new InputComponentDTO();
+            // set properties of inputComponentDTO from inputComponent
+            inputComponentDTO.setComponentUuid(inputComponent.getComponentUuid());
+            inputComponentDTO.setQuestion(inputComponent.getQuestion());
+            inputComponentDTO.setType(inputComponent.getType());
+            inputComponentDTO.setOrderNo(inputComponent.getOrderNo());
+            inputComponentDTO.setParentCanvas(inputComponent.getParentCanvas().getCanvasUuid());
+            inputComponentDTO.setIsRequired(inputComponent.getIsRequired());
+            inputComponentDTOs.add(inputComponentDTO);
+        }
+
+        return inputComponentDTOs;
+    }
+
 
     public UUID create(final InputComponentDTO inputComponentDTO) {
         final InputComponent inputComponent = new InputComponent();
