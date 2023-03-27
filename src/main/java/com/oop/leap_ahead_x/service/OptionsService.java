@@ -7,10 +7,13 @@ import com.oop.leap_ahead_x.repos.InputComponentRepository;
 import com.oop.leap_ahead_x.repos.OptionsRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +42,22 @@ public class OptionsService {
         return optionsRepository.findById(optionUuid)
                 .map(options -> mapToDTO(options, new OptionsDTO()))
                 .orElseThrow(NotFoundException::new);
+    }
+
+    public List<OptionsDTO> getOptionsByInputComponent(final UUID componentUuid) {
+        InputComponent inputComponent = inputComponentRepository.getReferenceById(componentUuid);
+        List<Options> options = optionsRepository.findOptionsByParentComponent(inputComponent.getComponentUuid());
+
+        List<OptionsDTO> optionsDTOs = new ArrayList<>();
+        for (Options option : options) {
+            OptionsDTO optionsDTO = new OptionsDTO();
+            optionsDTO.setOptionUuid(option.getOptionUuid());
+            optionsDTO.setOptionPrompt(option.getOptionPrompt());
+            optionsDTO.setParentInputComponent(option.getParentInputComponent());
+            optionsDTOs.add(optionsDTO);
+        }
+
+        return optionsDTOs;
     }
 
     public UUID create(final OptionsDTO optionsDTO) {
