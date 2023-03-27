@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface OptionsRepository extends JpaRepository<Options, UUID> {
     @Query("SELECT o FROM Options o JOIN o.optionComponentLinkInputComponents f WHERE f.componentUuid = :cId")
     List<Options> findOptionsByComponent(@Param("cId") UUID cId);
+
+    @Query("SELECT o FROM Options o WHERE o.parentInputComponent = :cId")
+    List<Options> findOptionsByParentComponent(@Param("cId") UUID cId);
 }
