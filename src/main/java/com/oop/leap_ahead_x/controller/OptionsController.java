@@ -33,6 +33,13 @@ public class OptionsController {
         return ResponseEntity.ok(optionsService.get(optionUuid));
     }
 
+    @GetMapping("/input-component/{canvasUuid}")
+    public ResponseEntity<List<OptionsDTO>> getOptionsByParentComponent(
+            @PathVariable(name = "canvasUuid") final UUID canvasUuid) {
+        List<OptionsDTO> options = optionsService.getOptionsByInputComponent(canvasUuid);
+        return ResponseEntity.ok(options);
+    }
+
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<UUID> createOptions(@RequestBody @Valid final OptionsDTO optionsDTO) {
