@@ -87,6 +87,7 @@ public class FormWorkflowService {
         // format the date string
         String formattedDateTime = formatter.format(dateTime);
         formWorkflowDTO.setDateCreated(formattedDateTime);
+        formWorkflowDTO.setArchive(formWorkflow.getArchive());
         return formWorkflowDTO;
     }
 
@@ -97,6 +98,7 @@ public class FormWorkflowService {
         final Admin createdBy = formWorkflowDTO_post.getCreatedBy() == null ? null : adminRepository.findById(formWorkflowDTO_post.getCreatedBy())
                 .orElseThrow(() -> new NotFoundException("createdBy not found"));
         formWorkflow.setCreatedBy(createdBy);
+        formWorkflow.setArchive(formWorkflowDTO_post.isArchive());
         return formWorkflow;
     }
 

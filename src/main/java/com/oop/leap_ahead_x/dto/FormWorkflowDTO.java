@@ -24,6 +24,19 @@ public class FormWorkflowDTO {
     @NotNull
     private String dateCreated;
 
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
+    private boolean archive;
+
+    public FormWorkflowDTO() {
+    }
+
     public String getDateCreated() {
         return dateCreated;
     }

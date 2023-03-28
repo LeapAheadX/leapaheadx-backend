@@ -35,14 +35,14 @@ INSERT INTO vendor (vendor_uuid, u_id, company, country, company_registration_no
 VALUES ('79ebb7ec-bd58-11ed-afa1-0242ac120002', '79ebad60-bd58-11ed-afa1-0242ac120002', 'NTU', 'Singapore', '12312312233', 'Sleeping', '23456232789', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert Form_workflows
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebc39a-bd58-11ed-afa1-0242ac120002', 'TestOne','This is a test form to mock the first one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated, archive)
+VALUES ('79ebc39a-bd58-11ed-afa1-0242ac120002', 'TestOne','This is a test form to mock the first one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false);
 
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebc5a2-bd58-11ed-afa1-0242ac120002', 'TestTwo','This is a test form to mock the second one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated, archive)
+VALUES ('79ebc5a2-bd58-11ed-afa1-0242ac120002', 'TestTwo','This is a test form to mock the second one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false);
 
-INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebcc0a-bd58-11ed-afa1-0242ac120002', 'TestThree','This is a test form to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+INSERT INTO form_workflow (form_uuid, name, description, created_by, date_created, last_updated, archive)
+VALUES ('79ebcc0a-bd58-11ed-afa1-0242ac120002', 'TestThree','This is a test form to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false);
 
 -- Insert subformCanvas
 INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated)

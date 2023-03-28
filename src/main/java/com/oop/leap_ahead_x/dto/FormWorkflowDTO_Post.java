@@ -20,6 +20,18 @@ public class FormWorkflowDTO_Post {
     @NotNull
     private UUID createdBy;
 
+    private boolean archive;
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
+
+
 
     public UUID getFormUuid() {
         return formUuid;
