@@ -48,6 +48,13 @@ public class SubformCanvasController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/archive/{canvasUuid}")
+    public ResponseEntity<Void> archiveSubForm(
+            @PathVariable(name = "canvasUuid") final UUID canvasUuid) {
+        subformCanvasService.archive(canvasUuid);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{canvasUuid}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteSubformCanvas(

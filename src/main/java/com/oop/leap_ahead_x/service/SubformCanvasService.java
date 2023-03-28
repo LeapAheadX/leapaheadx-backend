@@ -1,6 +1,7 @@
 package com.oop.leap_ahead_x.service;
 
 import com.oop.leap_ahead_x.domain.Admin;
+import com.oop.leap_ahead_x.domain.Application;
 import com.oop.leap_ahead_x.domain.SubformCanvas;
 import com.oop.leap_ahead_x.dto.SubformCanvasDTO;
 import com.oop.leap_ahead_x.repos.AdminRepository;
@@ -8,6 +9,8 @@ import com.oop.leap_ahead_x.repos.SubformCanvasRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +64,15 @@ public class SubformCanvasService {
         subformCanvasDTO.setDescription(subformCanvas.getDescription());
         subformCanvasDTO.setCreatedBy(subformCanvas.getCreatedBy() == null ? null : subformCanvas.getCreatedBy().getAdminUuid());
         subformCanvasDTO.setDateCreated(subformCanvas.getDateCreated());
+        subformCanvasDTO.setDisabled(subformCanvas.isDisabled());
         return subformCanvasDTO;
+    }
+
+    @Transactional
+    public void archive(UUID cId){
+        SubformCanvas subformCanvas = subformCanvasRepository.getReferenceById(cId);
+        subformCanvas.setDisabled(true);
+        subformCanvasRepository.save(subformCanvas);
     }
 
     private SubformCanvas mapToEntity(final SubformCanvasDTO subformCanvasDTO,
@@ -72,6 +83,7 @@ public class SubformCanvasService {
                 .orElseThrow(() -> new NotFoundException("createdBy not found"));
         subformCanvas.setCreatedBy(createdBy);
         subformCanvas.setDateCreated(subformCanvasDTO.getDateCreated());
+        subformCanvas.setDisabled(subformCanvasDTO.isDisabled());
         return subformCanvas;
     }
 
