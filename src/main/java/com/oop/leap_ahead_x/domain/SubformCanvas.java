@@ -34,6 +34,9 @@ public class SubformCanvas {
     @Column(name = "\"description\"")
     private String description;
 
+    @Column
+    private boolean isDisabled;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
     private Admin createdBy;
@@ -54,6 +57,15 @@ public class SubformCanvas {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
+    }
+
 
     public UUID getCanvasUuid() {
         return canvasUuid;

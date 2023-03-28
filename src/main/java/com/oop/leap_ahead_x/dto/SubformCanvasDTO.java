@@ -18,6 +18,8 @@ public class SubformCanvasDTO {
     @Size(max = 255)
     private String description;
 
+    private boolean isDisabled;
+
     @NotNull
     private UUID createdBy;
 
@@ -59,4 +61,11 @@ public class SubformCanvasDTO {
 
     public void setDateCreated(OffsetDateTime dateCreated) { this.dateCreated = dateCreated; }
 
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
+    }
 }
