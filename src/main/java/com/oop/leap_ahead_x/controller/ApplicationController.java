@@ -50,6 +50,12 @@ public class ApplicationController {
         return applicationService.getApplicationByVendor(vId);
     }
 
+    @GetMapping("/vendor/{vId}/{status}")
+    public ResponseEntity<String> getApplicationByVendorAndStatus(
+            @PathVariable(name = "vId") final UUID vId, @PathVariable(name = "status") final String status) {
+        return applicationService.getApplicationByVendorAndStatus(vId, status);
+    }
+
     //Get an array of applicationID,formID,formName,status,currentstepNumber based on the vendorID
     //http://localhost:8080/api/applications/getFullForm/79ec053a-bd58-11ed-afa1-0242ac120002
     @GetMapping("/getFullForm/{applicationUuid}")

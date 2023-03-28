@@ -284,14 +284,7 @@ public class ApplicationService {
         List<Application> applications = applicationRepository.findByCreatedFor(vendor);
         JSONArray outerArray = new JSONArray();
         for(Application application:applications){
-            JSONObject applicationObject = new JSONObject();
-            applicationObject.put("applicationId",application.getApplicationUuid());
-            applicationObject.put("status",application.getStatus());
-            applicationObject.put("currentStep",application.getCurrentStepNo());
-            FormWorkflow form = application.getFormUuid();
-            applicationObject.put("formId",form.getFormUuid());
-            applicationObject.put("formName",form.getName());
-            outerArray.put(applicationObject);
+            repack(outerArray, application);
         }
         String jsonString = outerArray.toString();
         return ResponseEntity.ok(jsonString);
@@ -305,6 +298,31 @@ public class ApplicationService {
         FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,currentStepNo);
         String assigneeType = assignee.getAssigneeType();
         return ResponseEntity.ok(assigneeType);
+    }
+
+    @Transactional
+    public ResponseEntity<String> getApplicationByVendorAndStatus(UUID vId, String status) {
+        Vendor vendor = vendorRepository.getReferenceById(vId);
+        List<Application> applications = applicationRepository.findByCreatedFor(vendor);
+        JSONArray outerArray = new JSONArray();
+        for (Application application : applications) {
+            if (application.getStatus().equals(status)) {
+                repack(outerArray, application);
+            }
+        }
+        String jsonString = outerArray.toString();
+        return ResponseEntity.ok(jsonString);
+    }
+
+    private void repack(JSONArray outerArray, Application application) {
+        JSONObject applicationObject = new JSONObject();
+        applicationObject.put("applicationId", application.getApplicationUuid());
+        applicationObject.put("status", application.getStatus());
+        applicationObject.put("currentStep", application.getCurrentStepNo());
+        FormWorkflow form = application.getFormUuid();
+        applicationObject.put("formId", form.getFormUuid());
+        applicationObject.put("formName", form.getName());
+        outerArray.put(applicationObject);
     }
 
     private ApplicationDTO mapToDTO(final Application application,
@@ -355,5 +373,6 @@ public class ApplicationService {
         application.setDueDate(offsetDateTime);
         return application;
     }
+
 
 }
