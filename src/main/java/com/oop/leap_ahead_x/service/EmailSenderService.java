@@ -24,7 +24,7 @@ public class EmailSenderService {
                           String body){
         SimpleMailMessage message = new SimpleMailMessage();
         String email = userService.get(UUID.fromString(toEmail)).getEmail();
-        message.setFrom("zikaiho@gmail.com");
+        message.setFrom("ray.quek@gmail.com");
         message.setTo(email);
         message.setText(body);
         message.setSubject(subject);

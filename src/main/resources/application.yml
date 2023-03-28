@@ -23,13 +23,17 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: zikaiho@gmail.com
-    password: z
+    username: ray.quek@gmail.com
+    password: kqfztespfdabeoqb
     properties:
       mail:
         smtp:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
 springdoc:
   pathsToMatch: /api/**
