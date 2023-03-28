@@ -135,7 +135,7 @@ public class FormWorkflowService {
                     individualComponentObject.put("question", question);
                     individualComponentObject.put("type", type);
                     individualComponentObject.put("componentId", cId);
-                    List<Options> options = optionsRepository.findOptionsByComponent(cId);
+                    List<Options> options = optionsRepository.findByParentInputComponent(cId);
                     JSONArray optionArray = new JSONArray();
                     for (Options option : options) {
                         String prompt = option.getOptionPrompt();
@@ -189,7 +189,7 @@ public class FormWorkflowService {
                 individualComponentObject.put("question", question);
                 individualComponentObject.put("type", type);
                 individualComponentObject.put("componentId", cId);
-                List<Options> options = optionsRepository.findOptionsByComponent(cId);
+                List<Options> options = optionsRepository.findByParentInputComponent(cId);
                 JSONArray optionArray = new JSONArray();
                 for (Options option : options) {
                     String prompt = option.getOptionPrompt();
