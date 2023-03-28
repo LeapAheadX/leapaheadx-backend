@@ -16,4 +16,6 @@ public interface OptionsRepository extends JpaRepository<Options, UUID> {
 
     @Query("SELECT o FROM Options o WHERE o.parentInputComponent = :cId")
     List<Options> findOptionsByParentComponent(@Param("cId") UUID cId);
+
+    List<Options> findByParentInputComponent(UUID cId);
 }

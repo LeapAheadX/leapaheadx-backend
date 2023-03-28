@@ -186,7 +186,7 @@ public class ApplicationService {
     @Transactional
     public void archive(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("Hidden");
+        application.setDisabledStatus(true);
         applicationRepository.save(application);
     }
 
@@ -255,7 +255,7 @@ public class ApplicationService {
                 individualComponentObject.put("type", type);
                 individualComponentObject.put("componentId", cId);
                 individualComponentObject.put("required",component.getIsRequired());
-                List<Options> options = optionsRepository.findOptionsByComponent(cId);
+                List<Options> options = optionsRepository.findByParentInputComponent(cId);
                 JSONArray optionArray = new JSONArray();
                 for (Options option : options) {
                     String prompt = option.getOptionPrompt();
@@ -357,6 +357,7 @@ public class ApplicationService {
 //        final Vendor createdFor = applicationDTO.getCreatedFor() == null ? null : vendorRepository.findById(applicationDTO.getCreatedFor())
 //                .orElseThrow(() -> new NotFoundException("createdFor not found"));
 //        application.setCreatedFor(createdFor);
+        application.setDisabledStatus(applicationDTO.getDisabledStatus());
 
         final Vendor createdFor = applicationDTO.getCompany() == null ? null : vendorRepository.findByCompanyName(applicationDTO.getCompany());
         application.setCreatedFor(createdFor);

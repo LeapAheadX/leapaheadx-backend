@@ -23,10 +23,11 @@ public class ApplicationDTO {
     @Size(max = 225)
     private String formName;
 
-
-
     @NotNull
     private Integer currentStepNo;
+
+
+    private boolean disabled;
 
 //    @NotNull
 //    private UUID createdFor;
@@ -106,6 +107,14 @@ public class ApplicationDTO {
 
     public void setFormName(String formName) {
         this.formName = formName;
+    }
+
+    public Boolean getDisabledStatus() {
+        return disabled;
+    }
+
+    public void setDisabledStatus(final Boolean disabled) {
+        this.disabled = disabled;
     }
 
 }
