@@ -136,15 +136,11 @@ public class ApplicationController {
         return ResponseEntity.ok().build();
     }
 
-
-
     @GetMapping("/status/{status}")
     public ResponseEntity<List<ApplicationDTO>>  getApplicationByStatus(
             @PathVariable(name = "status") final String status) {
         return ResponseEntity.ok(applicationService.getByStatus(status));
     }
-
-
 
 
 }

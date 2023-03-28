@@ -92,4 +92,10 @@ public class UserService {
         User user = userRepository.getReferenceById(uId);
         user.setDisabled(true);
     }
+
+    @Transactional
+    public String getRole(UUID uId) {
+        User user = userRepository.getReferenceById(uId);
+        return user.getRole();
+    }
 }

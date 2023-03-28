@@ -59,6 +59,7 @@ public class UserController {
         userService.lock(uId);
         return ResponseEntity.ok().build();
     }
+
     @DeleteMapping("/{uId}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "uId") final UUID uId) {
@@ -66,4 +67,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/role/{uId}")
+    public ResponseEntity<String> getUserRole(@PathVariable(name = "uId") final UUID uId) {
+        return ResponseEntity.ok(userService.getRole(uId));
+    }
 }

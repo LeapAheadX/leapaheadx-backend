@@ -45,14 +45,14 @@ INSERT INTO form_workflow (form_uuid, name, description, created_by, date_create
 VALUES ('79ebcc0a-bd58-11ed-afa1-0242ac120002', 'TestThree','This is a test form to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false);
 
 -- Insert subformCanvas
-INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebce12-bd58-11ed-afa1-0242ac120002','SubCanvasOne','This is a test for SubCanvas to mock the first one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
+INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated, is_disabled)
+VALUES ('79ebce12-bd58-11ed-afa1-0242ac120002','SubCanvasOne','This is a test for SubCanvas to mock the first one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP ,false);
 
-INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebcfc0-bd58-11ed-afa1-0242ac120002','SubCanvasTwo','This is a test for SubCanvasm to mock the second one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
+INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated,is_disabled)
+VALUES ('79ebcfc0-bd58-11ed-afa1-0242ac120002','SubCanvasTwo','This is a test for SubCanvasm to mock the second one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false );
 
-INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated)
-VALUES ('79ebd182-bd58-11ed-afa1-0242ac120002','SubCanvasThree','This is a test SubCanvas to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP );
+INSERT INTO subform_canvas (canvas_uuid, name, description, created_by, date_created, last_updated,is_disabled)
+VALUES ('79ebd182-bd58-11ed-afa1-0242ac120002','SubCanvasThree','This is a test SubCanvas to mock the third one','79ebaf36-bd58-11ed-afa1-0242ac120002', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP , false);
 
 -- Insertion of Form Steps
 INSERT INTO form_step(step_uuid, parent_form, assignee_type, order_no, action, date_created, last_updated)
