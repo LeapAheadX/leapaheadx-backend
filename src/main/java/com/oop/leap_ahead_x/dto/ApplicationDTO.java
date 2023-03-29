@@ -27,7 +27,7 @@ public class ApplicationDTO {
     private Integer currentStepNo;
 
 
-    private boolean disabled;
+    private boolean isdisabled;
 
 //    @NotNull
 //    private UUID createdFor;
@@ -109,12 +109,12 @@ public class ApplicationDTO {
         this.formName = formName;
     }
 
-    public Boolean getDisabledStatus() {
-        return disabled;
+    public boolean getDisabledStatus() {
+        return isdisabled;
     }
 
-    public void setDisabledStatus(final Boolean disabled) {
-        this.disabled = disabled;
+    public void setDisabledStatus(final boolean isdisabled) {
+        this.isdisabled = isdisabled;
     }
 
 }
