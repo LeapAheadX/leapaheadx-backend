@@ -85,14 +85,24 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void saveVendor(UUID aId){
+    public void Save(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
-        application.setStatus("InProgress");
+        FormWorkflow form = application.getFormUuid();
+        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,application.getCurrentStepNo());
+        String userType = assignee.getAssigneeType();
+        if(userType.equals("admin")) {
+            application.setStatus("Pending");
+        }else if(userType.equals("vendor")){
+            application.setStatus("InProgress");
+        }else{
+            application.setStatus("Escalated");
+        }
+
         applicationRepository.save(application);
     }
 
     @Transactional
-    public void vendorSubmit(UUID aId){
+    public void Submit(UUID aId){
         Application application = applicationRepository.getReferenceById(aId);
         FormWorkflow form = application.getFormUuid();
         int newStep = application.getCurrentStepNo()+1;
@@ -102,13 +112,15 @@ public class ApplicationService {
             application.setStatus("Pending");
         }else if(userType.equals("approver")) {
             application.setStatus("Escalated");
+        }else{
+            application.setStatus("InProgress");
         }
         application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
     }
 
     @Transactional
-    public void adminReject(final UUID aId,String comments){
+    public void Reject(final UUID aId,String comments){
         Application application = applicationRepository.getReferenceById(aId);
         FormWorkflow form = application.getFormUuid();
         int newStep = application.getCurrentStepNo()-1;
@@ -121,41 +133,6 @@ public class ApplicationService {
             application.setStatus("Escalated");
         }else{
             application.setStatus("Pending");
-        }
-        application.setCurrentStepNo(newStep);
-        applicationRepository.save(application);
-    }
-
-    @Transactional
-    public void adminSubmit(UUID aId){
-        Application application = applicationRepository.getReferenceById(aId);
-        FormWorkflow form = application.getFormUuid();
-        int newStep = application.getCurrentStepNo()+1;
-        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
-        String userType = assignee.getAssigneeType();
-        if(userType.equals("vendor")){
-            application.setStatus("InProgress");
-        }else{
-            application.setStatus("Escalated");
-        }
-        application.setCurrentStepNo(newStep);
-        applicationRepository.save(application);
-    }
-
-    @Transactional
-    public void approverReject(UUID aId, String comments){
-        Application application = applicationRepository.getReferenceById(aId);
-        FormWorkflow form = application.getFormUuid();
-        int newStep = application.getCurrentStepNo()-1;
-        FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
-        application.setComment(comments);
-        String userType = assignee.getAssigneeType();
-        if(userType.equals("vendor")){
-            application.setStatus("InProgress");
-        }else if(userType.equals("admin")){
-            application.setStatus("Pending");
-        }else{
-            application.setStatus("Escalated");
         }
         application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
@@ -330,6 +307,7 @@ public class ApplicationService {
         applicationDTO.setApplicationUuid(application.getApplicationUuid());
         applicationDTO.setStatus(application.getStatus());
         applicationDTO.setComment(application.getComment());
+        applicationDTO.setDisabledStatus(application.getDisabledStatus());
         applicationDTO.setCurrentStepNo(application.getCurrentStepNo());
 //        applicationDTO.setCreatedFor(application.getCreatedFor() == null ? null : application.getCreatedFor().getVendorUuid());
         Optional<Vendor> vendor = vendorRepository.findById(application.getCreatedFor().getVendorUuid());
@@ -353,6 +331,7 @@ public class ApplicationService {
                                     final Application application) {
         application.setStatus(applicationDTO.getStatus());
         application.setComment(applicationDTO.getComment());
+        application.setDisabledStatus(applicationDTO.getDisabledStatus());
         application.setCurrentStepNo(applicationDTO.getCurrentStepNo());
 //        final Vendor createdFor = applicationDTO.getCreatedFor() == null ? null : vendorRepository.findById(applicationDTO.getCreatedFor())
 //                .orElseThrow(() -> new NotFoundException("createdFor not found"));
