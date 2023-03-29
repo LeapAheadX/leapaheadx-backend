@@ -66,41 +66,26 @@ public class ApplicationController {
     }
 
 
-    //Vendor save application
-    @PutMapping("/vendorSave/{aId}")
+    //save application
+    @PutMapping("/Save/{aId}")
     public ResponseEntity<Void> saveVendor(
             @PathVariable(name = "aId") final UUID aId) {
-        applicationService.saveVendor(aId);
+        applicationService.Save(aId);
         return ResponseEntity.ok().build();
     }
 
-    //Vendor submit application
-    @PutMapping("/vendorSubmit/{aId}")
-    public ResponseEntity<Void> vendorSubmit(
+    //submit application
+    @PutMapping("/Submit/{aId}")
+    public ResponseEntity<Void> Submit(
             @PathVariable(name = "aId") final UUID aId) {
-        applicationService.vendorSubmit(aId);
+        applicationService.Submit(aId);
         return ResponseEntity.ok().build();
     }
 
-    //Admin reject application
-    @PutMapping("/adminReject/{aId}")
-    public ResponseEntity<String> adminReject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
-        applicationService.adminReject(aId, requestBody.get("comments"));
-        return ResponseEntity.ok("Comments updated successfully");
-    }
-
-    //Admin submit application
-    @PutMapping("/adminSubmit/{aId}")
-    public ResponseEntity<Void> adminSubmit(
-            @PathVariable(name = "aId") final UUID aId) {
-        applicationService.adminSubmit(aId);
-        return ResponseEntity.ok().build();
-    }
-
-    //Approver reject application
-    @PutMapping("/approverReject/{aId}")
-    public ResponseEntity<String> approverReject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
-        applicationService.approverReject(aId, requestBody.get("comments"));
+    //reject application
+    @PutMapping("/reject/{aId}")
+    public ResponseEntity<String> Reject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
+        applicationService.Reject(aId, requestBody.get("comments"));
         return ResponseEntity.ok("Comments updated successfully");
     }
 
@@ -112,6 +97,7 @@ public class ApplicationController {
         applicationService.approverApprove(aId);
         return ResponseEntity.ok().build();
     }
+
     //archive application based on application Id.
     @PutMapping("/archive/{applicationUuid}")
     public ResponseEntity<Void> archiveApplication(
