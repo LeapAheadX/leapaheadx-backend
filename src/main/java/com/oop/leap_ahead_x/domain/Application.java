@@ -60,7 +60,7 @@ public class Application {
     private OffsetDateTime lastUpdated;
 
     @Column
-    private boolean disabled;
+    private boolean isdisabled;
 
 
     public UUID getApplicationUuid() {
@@ -144,12 +144,12 @@ public class Application {
         this.dueDate = dueDate;
     }
 
-    public Boolean getDisabledStatus() {
-        return disabled;
+    public boolean getDisabledStatus() {
+        return isdisabled;
     }
 
-    public void setDisabledStatus(final Boolean disabled) {
-        this.disabled = disabled;
+    public void setDisabledStatus(final boolean isdisabled) {
+        this.isdisabled = isdisabled;
     }
 
 }

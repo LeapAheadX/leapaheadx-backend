@@ -136,17 +136,17 @@ VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ec0044-bd58-11ed-afa1-0242ac1
 INSERT INTO  option_component_link(component_uuid, option_uuid)
 VALUES ('79ebf45a-bd58-11ed-afa1-0242ac120002', '79ec01fc-bd58-11ed-afa1-0242ac120002');
 
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec03aa-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec053a-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec0da0-bd58-11ed-afa1-0242ac120002','79ebb4e0-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','InProgress',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec0f4e-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc39a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec10a2-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebc5a2-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
-INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,disabled)
+INSERT INTO application (application_uuid, created_for, form_uuid, status, comment, current_step_no, date_created, last_updated, due_date,isdisabled)
 VALUES ('79ec1232-bd58-11ed-afa1-0242ac120002','79ebb7ec-bd58-11ed-afa1-0242ac120002','79ebcc0a-bd58-11ed-afa1-0242ac120002','NotStarted',NULL ,1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '2023-03-21 03:49:13.250553',false);
 
 INSERT INTO application_response_value (application_uuid, canvas_uuid,component_uuid,value, date_created, last_updated)
