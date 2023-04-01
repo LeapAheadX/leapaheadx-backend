@@ -102,22 +102,61 @@ public class ApplicationService {
     }
 
     @Transactional
-    public void Submit(UUID aId){
+    public ResponseEntity<String> Submit(UUID aId){
+        JSONArray resultArray = new JSONArray();
         Application application = applicationRepository.getReferenceById(aId);
         FormWorkflow form = application.getFormUuid();
+        int currentStep = application.getCurrentStepNo();
         int newStep = application.getCurrentStepNo()+1;
         FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form,newStep);
-        String userType = assignee.getAssigneeType();
-        if(userType.equals("admin")){
-            application.setStatus("Pending");
-        }else if(userType.equals("approver")) {
-            application.setStatus("Escalated");
+        FormStep step = formStepRepository.findByParentFormAndAction(form,"Check and Approve");
+        int maxStep = step.getOrderNo();
+        if(currentStep != maxStep) {
+            String userType = assignee.getAssigneeType();
+            if (userType.equals("vendor")) {
+                application.setStatus("InProgress");
+            } else if (userType.equals("admin")) {
+                application.setStatus("Pending");
+            }else{
+                application.setStatus("Escalated");
+            }
+            application.setCurrentStepNo(newStep);
+            applicationRepository.save(application);
+            resultArray.put(userType);
+            resultArray.put(application.getCreatedFor().getUId().getUId());
+            String jsonString = resultArray.toString();
+            return ResponseEntity.ok(jsonString);
         }else{
-            application.setStatus("InProgress");
+            application.setStatus("Completed");
+            applicationRepository.save(application);
+            String jsonString = "approver";
+            return ResponseEntity.ok(jsonString);
         }
-        application.setCurrentStepNo(newStep);
-        applicationRepository.save(application);
     }
+
+//    @Transactional
+//    public void approverApprove(UUID aId){
+//        Application application = applicationRepository.getReferenceById(aId);
+//        FormWorkflow form = application.getFormUuid();
+//        int currentStep = application.getCurrentStepNo();
+//        FormStep step = formStepRepository.findByParentFormAndAction(form,"Check and Approve");
+//        int maxStep = step.getOrderNo();
+//        if(currentStep != maxStep) {
+//            int newStep = currentStep+1;
+//            FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form, newStep);
+//            String userType = assignee.getAssigneeType();
+//            if (userType.equals("vendor")) {
+//                application.setStatus("InProgress");
+//            } else if (userType.equals("admin")) {
+//                application.setStatus("Pending");
+//            }
+//            application.setCurrentStepNo(newStep);
+//            applicationRepository.save(application);
+//        }else{
+//            application.setStatus("Completed");
+//            applicationRepository.save(application);
+//        }
+//    }
 
     @Transactional
     public void Reject(final UUID aId,String comments){
@@ -135,28 +174,6 @@ public class ApplicationService {
             application.setStatus("Pending");
         }
         application.setCurrentStepNo(newStep);
-        applicationRepository.save(application);
-    }
-
-    @Transactional
-    public void approverApprove(UUID aId){
-        Application application = applicationRepository.getReferenceById(aId);
-        FormWorkflow form = application.getFormUuid();
-        int currentStep = application.getCurrentStepNo();
-        FormStep step = formStepRepository.findByParentFormAndAction(form,"Check and Approve");
-        int maxStep = step.getOrderNo();
-        if(currentStep != maxStep) {
-            int newStep = currentStep+1;
-            FormStep assignee = formStepRepository.findByParentFormAndOrderNo(form, newStep);
-            String userType = assignee.getAssigneeType();
-            if (userType.equals("vendor")) {
-                application.setStatus("InProgress");
-            } else if (userType.equals("admin")) {
-                application.setStatus("Pending");
-            }
-            application.setCurrentStepNo(newStep);
-        }
-        application.setStatus("Completed");
         applicationRepository.save(application);
     }
 

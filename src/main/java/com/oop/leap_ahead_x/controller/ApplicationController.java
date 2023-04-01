@@ -82,10 +82,9 @@ public class ApplicationController {
 
     //submit application
     @PutMapping("/Submit/{aId}")
-    public ResponseEntity<Void> Submit(
+    public ResponseEntity<String> Submit(
             @PathVariable(name = "aId") final UUID aId) {
-        applicationService.Submit(aId);
-        return ResponseEntity.ok().build();
+        return applicationService.Submit(aId);
     }
 
     //reject application
@@ -97,12 +96,12 @@ public class ApplicationController {
 
 
     //Approver approve application
-    @PutMapping("/approverApprove/{aId}")
-    public ResponseEntity<Void> approverApprove(
-            @PathVariable(name = "aId") final UUID aId) {
-        applicationService.approverApprove(aId);
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping("/approverApprove/{aId}")
+//    public ResponseEntity<Void> approverApprove(
+//            @PathVariable(name = "aId") final UUID aId) {
+//        applicationService.approverApprove(aId);
+//        return ResponseEntity.ok().build();
+//    }
 
     //archive application based on application Id.
     @PutMapping("/archive/{applicationUuid}")
