@@ -16,14 +16,14 @@ public class PDFController {
     private JavaMailSender mailSender;
 
     @PostMapping("/sendpdf")
-    public ResponseEntity<?> sendPdf(@RequestParam("pdf") MultipartFile pdfFile, @RequestParam("email") String email) {
+    public ResponseEntity<?> sendPdf(@RequestParam("pdf") MultipartFile pdfFile, @RequestParam("email") String email,@RequestParam("message") String emailMessage) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("ray.quek@gmail.com"); // replace with your own email address
             helper.setTo(email);
             helper.setSubject("PDF document");
-            helper.setText("Attached is the PDF document.");
+            helper.setText(emailMessage);
             helper.addAttachment(pdfFile.getOriginalFilename(), pdfFile);
             mailSender.send(message);
             return ResponseEntity.ok().build();
