@@ -46,6 +46,12 @@ public class AuthService {
 
                 // Construct the mock access token made up of [UUID, ROLE_UUID]
                 List<UUID> returnToken = new ArrayList<>();
+
+                // Return null if the account is disabled
+                if (user.get().isDisabled()){
+                    return null;
+                }
+
                 UUID userUUID = user.get().getUId();
 
                 // Adds the UUID into the Array
