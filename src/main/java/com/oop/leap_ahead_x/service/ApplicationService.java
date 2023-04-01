@@ -159,7 +159,8 @@ public class ApplicationService {
 //    }
 
     @Transactional
-    public void Reject(final UUID aId,String comments){
+    public ResponseEntity<String> Reject(final UUID aId,String comments){
+        JSONArray resultArray = new JSONArray();
         Application application = applicationRepository.getReferenceById(aId);
         FormWorkflow form = application.getFormUuid();
         int newStep = application.getCurrentStepNo()-1;
@@ -175,6 +176,10 @@ public class ApplicationService {
         }
         application.setCurrentStepNo(newStep);
         applicationRepository.save(application);
+        resultArray.put(userType);
+        resultArray.put(application.getCreatedFor().getUId().getUId());
+        String jsonString = resultArray.toString();
+        return ResponseEntity.ok(jsonString);
     }
 
     @Transactional
