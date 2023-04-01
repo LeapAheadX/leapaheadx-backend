@@ -90,8 +90,7 @@ public class ApplicationController {
     //reject application
     @PutMapping("/reject/{aId}")
     public ResponseEntity<String> Reject(@PathVariable("aId") UUID aId, @RequestBody Map<String, String> requestBody) {
-        applicationService.Reject(aId, requestBody.get("comments"));
-        return ResponseEntity.ok("Comments updated successfully");
+        return applicationService.Reject(aId, requestBody.get("comments"));
     }
 
 
