@@ -1,13 +1,9 @@
 package com.oop.leap_ahead_x.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
-import java.util.Set;
+
 import java.util.UUID;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
@@ -25,23 +21,32 @@ public class User {
     @GeneratedValue(generator = "uuid")
     private UUID uId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(nullable = false, name = "\"role\"", length = 50)
     private String role;
 
-    @OneToMany(mappedBy = "uId")
-    private Set<Admin> uIdAdmins;
+    @Column(nullable = false)
+    private String name;
 
-    @OneToMany(mappedBy = "uId")
-    private Set<Approver> uIdApprovers;
+    @Column(nullable = false)
+    private String phoneNumber;
 
-    @OneToMany(mappedBy = "uId")
-    private Set<Vendor> uIdVendors;
+    @Column(nullable = false)
+    private boolean isDisabled;
+
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
+    private Admin uIdAdmin;
+
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
+    private Approver uIdApprover;
+
+    @OneToOne(mappedBy = "uId", fetch = FetchType.EAGER)
+    private Vendor uIdVendor;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -83,28 +88,36 @@ public class User {
         this.role = role;
     }
 
-    public Set<Admin> getUIdAdmins() {
-        return uIdAdmins;
+    public Admin getUIdAdmin() {
+        return uIdAdmin;
     }
 
-    public void setUIdAdmins(final Set<Admin> uIdAdmins) {
-        this.uIdAdmins = uIdAdmins;
+    public void setUIdAdmin(final Admin uIdAdmin) {
+        this.uIdAdmin = uIdAdmin;
     }
 
-    public Set<Approver> getUIdApprovers() {
-        return uIdApprovers;
+    public Approver getUIdApprover() {
+        return uIdApprover;
     }
 
-    public void setUIdApprovers(final Set<Approver> uIdApprovers) {
-        this.uIdApprovers = uIdApprovers;
+    public void setUIdApprover(final Approver uIdApprover) {
+        this.uIdApprover = uIdApprover;
     }
 
-    public Set<Vendor> getUIdVendors() {
-        return uIdVendors;
+    public Vendor getUIdVendor() {
+        return uIdVendor;
     }
 
-    public void setUIdVendors(final Set<Vendor> uIdVendors) {
-        this.uIdVendors = uIdVendors;
+    public void setUIdVendor(final Vendor uIdVendor) {
+        this.uIdVendor = uIdVendor;
+    }
+
+    public boolean isDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        isDisabled = disabled;
     }
 
     public OffsetDateTime getDateCreated() {
@@ -123,4 +136,19 @@ public class User {
         this.lastUpdated = lastUpdated;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

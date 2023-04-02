@@ -1,14 +1,7 @@
 package com.oop.leap_ahead_x.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 import java.time.OffsetDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -17,26 +10,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@IdClass(UniqueApplicationResponseID.class)
 public class ApplicationResponseValue {
 
-    @Id
-    @Column(nullable = false, updatable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer responseId;
-
-    @Column(nullable = false)
+    @Column
     private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_uuid", nullable = false)
+    @Id
     private Application applicationUuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "canvas_uuid", nullable = false)
+    @Id
     private SubformCanvas canvasUuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "component_uuid", nullable = false)
+    @Id
     private InputComponent componentUuid;
 
     @CreatedDate
@@ -47,13 +39,7 @@ public class ApplicationResponseValue {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
-    public Integer getResponseId() {
-        return responseId;
-    }
 
-    public void setResponseId(final Integer responseId) {
-        this.responseId = responseId;
-    }
 
     public String getValue() {
         return value;

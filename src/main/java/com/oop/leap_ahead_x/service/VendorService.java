@@ -2,11 +2,13 @@ package com.oop.leap_ahead_x.service;
 
 import com.oop.leap_ahead_x.domain.User;
 import com.oop.leap_ahead_x.domain.Vendor;
+
 import com.oop.leap_ahead_x.dto.VendorDTO;
 import com.oop.leap_ahead_x.repos.UserRepository;
 import com.oop.leap_ahead_x.repos.VendorRepository;
 import com.oop.leap_ahead_x.exceptions.NotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -58,6 +60,9 @@ public class VendorService {
         vendorDTO.setVendorUuid(vendor.getVendorUuid());
         vendorDTO.setCompany(vendor.getCompany());
         vendorDTO.setCountry(vendor.getCountry());
+        vendorDTO.setBusinessNature(vendor.getBusinessNature());
+        vendorDTO.setGstNumber(vendor.getGstNumber());
+        vendorDTO.setCompanyRegistrationNo(vendor.getCompanyRegistrationNo());
         vendorDTO.setUId(vendor.getUId() == null ? null : vendor.getUId().getUId());
         return vendorDTO;
     }
@@ -65,10 +70,22 @@ public class VendorService {
     private Vendor mapToEntity(final VendorDTO vendorDTO, final Vendor vendor) {
         vendor.setCompany(vendorDTO.getCompany());
         vendor.setCountry(vendorDTO.getCountry());
+        vendor.setBusinessNature(vendorDTO.getBusinessNature());
+        vendor.setGstNumber(vendorDTO.getGstNumber());
+        vendor.setCompanyRegistrationNo(vendorDTO.getCompanyRegistrationNo());
         final User uId = vendorDTO.getUId() == null ? null : userRepository.findById(vendorDTO.getUId())
                 .orElseThrow(() -> new NotFoundException("uId not found"));
         vendor.setUId(uId);
         return vendor;
     }
 
+    public VendorDTO getVendorByUID(final UUID uId){
+        Optional<User> user = userRepository.findById(uId);
+        if (user.isPresent()) {
+            UUID vendorUUID = vendorRepository.findByuId(user).getVendorUuid();
+            return this.get(vendorUUID);
+        }else{
+            throw new NotFoundException("Not found");
+        }
+    }
 }

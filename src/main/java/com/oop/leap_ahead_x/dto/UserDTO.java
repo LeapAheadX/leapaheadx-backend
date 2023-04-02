@@ -16,12 +16,24 @@ public class UserDTO {
     private String email;
 
     @NotNull
-    @Size(max = 50)
+    @Size(max = 255)
     private String password;
 
     @NotNull
     @Size(max = 50)
     private String role;
+
+    @NotNull
+    @Size(max=255)
+    private String name;
+
+    @NotNull
+    @Size(max = 100)
+    private String phoneNumber;
+
+    @NotNull
+    @JsonProperty("isDisabled")
+    private boolean isDisabled;
 
     public UUID getUId() {
         return uId;
@@ -55,4 +67,27 @@ public class UserDTO {
         this.role = role;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getDisabled() {
+        return isDisabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        isDisabled = disabled;
+    }
 }

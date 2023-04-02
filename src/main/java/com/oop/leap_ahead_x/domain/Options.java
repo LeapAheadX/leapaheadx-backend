@@ -30,6 +30,9 @@ public class Options {
     @Column(nullable = false)
     private String optionPrompt;
 
+    @Column(nullable = false)
+    private UUID parentInputComponent;
+
     @ManyToMany
     @JoinTable(
             name = "option_component_link",
@@ -85,6 +88,14 @@ public class Options {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public UUID getParentInputComponent() {
+        return parentInputComponent;
+    }
+
+    public void setParentInputComponent(UUID parentInputComponent) {
+        this.parentInputComponent = parentInputComponent;
     }
 
 }

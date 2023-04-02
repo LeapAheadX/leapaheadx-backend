@@ -2,6 +2,8 @@ package com.oop.leap_ahead_x.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+
 import java.util.UUID;
 
 
@@ -18,6 +20,30 @@ public class FormWorkflowDTO {
 
     @NotNull
     private UUID createdBy;
+
+    @NotNull
+    private String dateCreated;
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+
+    private boolean archive;
+
+    public FormWorkflowDTO() {
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     public UUID getFormUuid() {
         return formUuid;

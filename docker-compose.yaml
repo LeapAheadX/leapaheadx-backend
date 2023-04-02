@@ -1,0 +1,39 @@
+version: '3.0'
+services:
+  leapahead-db:
+    container_name: leapahead-db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: leap_ahead_x
+      MYSQL_USER: leap
+      MYSQL_PASSWORD: leap
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql
+    ports:
+      - 3306:3306
+
+  leapahead-backend:
+    build: .
+    image: leap-ahead-x
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://leapahead-db:3306/leap_ahead_x
+      SPRING_DATASOURCE_USERNAME: leap
+      SPRING_DATASOURCE_PASSWORD: leap
+    depends_on:
+      - leapahead-db
+    volumes:
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql
+
+  population:
+    image: mysql:8.0
+    depends_on:
+      - leapahead-backend
+      - leapahead-db
+    command: [ "sh", "-c", "mysql -h leapahead-db -u leap -pleap < /docker-entrypoint-initdb.d/data_v2.sql" ]
+    volumes:
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql

@@ -14,6 +14,9 @@ public class OptionsDTO {
     @Size(max = 255)
     private String optionPrompt;
 
+    @NotNull
+    private UUID parentInputComponent;
+
     private List<UUID> optionComponentLinkInputComponents;
 
     public UUID getOptionUuid() {
@@ -39,6 +42,14 @@ public class OptionsDTO {
     public void setOptionComponentLinkInputComponents(
             final List<UUID> optionComponentLinkInputComponents) {
         this.optionComponentLinkInputComponents = optionComponentLinkInputComponents;
+    }
+
+    public UUID getParentInputComponent() {
+        return parentInputComponent;
+    }
+
+    public void setParentInputComponent(UUID parentInputComponent) {
+        this.parentInputComponent = parentInputComponent;
     }
 
 }

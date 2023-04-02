@@ -52,6 +52,21 @@ public class FormWorkflow {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    @Column
+    private boolean archive;
+
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+    public boolean getArchive() {
+        return archive;
+    }
+
     public UUID getFormUuid() {
         return formUuid;
     }
@@ -115,5 +130,6 @@ public class FormWorkflow {
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
 
 }

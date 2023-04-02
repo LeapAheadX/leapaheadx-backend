@@ -1,9 +1,7 @@
 package com.oop.leap_ahead_x.dto;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
-
 
 public class ApplicationDTO {
 
@@ -18,13 +16,34 @@ public class ApplicationDTO {
     private String comment;
 
     @NotNull
+    @Size(max = 225)
+    private String company;
+
+    @NotNull
+    @Size(max = 225)
+    private String formName;
+
+    @NotNull
     private Integer currentStepNo;
 
-    @NotNull
-    private UUID createdFor;
 
+    private boolean isdisabled;
+
+//    @NotNull
+//    private UUID createdFor;
+
+    //    @NotNull
+//    private UUID formUuid;
     @NotNull
-    private UUID formUuid;
+    private String dueDate;
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
 
     public UUID getApplicationUuid() {
         return applicationUuid;
@@ -58,20 +77,44 @@ public class ApplicationDTO {
         this.currentStepNo = currentStepNo;
     }
 
-    public UUID getCreatedFor() {
-        return createdFor;
+//    public UUID getCreatedFor() {
+//        return createdFor;
+//    }
+//
+//    public void setCreatedFor(final UUID createdFor) {
+//        this.createdFor = createdFor;
+//    }
+
+//    public UUID getFormUuid() {
+//        return formUuid;
+//    }
+//
+//    public void setFormUuid(final UUID formUuid) {
+//        this.formUuid = formUuid;
+//    }
+
+    public String getCompany() {
+        return company;
     }
 
-    public void setCreatedFor(final UUID createdFor) {
-        this.createdFor = createdFor;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public UUID getFormUuid() {
-        return formUuid;
+    public String getFormName() {
+        return formName;
     }
 
-    public void setFormUuid(final UUID formUuid) {
-        this.formUuid = formUuid;
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    public boolean getDisabledStatus() {
+        return isdisabled;
+    }
+
+    public void setDisabledStatus(final boolean isdisabled) {
+        this.isdisabled = isdisabled;
     }
 
 }

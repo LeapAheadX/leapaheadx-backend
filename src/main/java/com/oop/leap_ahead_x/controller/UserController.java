@@ -9,16 +9,9 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
@@ -52,6 +45,21 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/unlock/{uId}")
+    public ResponseEntity<Void> unlock(
+            @PathVariable(name = "uId") final UUID uId) {
+        userService.unlock(uId);
+        return ResponseEntity.ok().build();
+    }
+
+    //Vendor save application
+    @PutMapping("/lock/{uId}")
+    public ResponseEntity<Void> lock(
+            @PathVariable(name = "uId") final UUID uId) {
+        userService.lock(uId);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{uId}")
     @ApiResponse(responseCode = "204")
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "uId") final UUID uId) {
@@ -59,4 +67,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/role/{uId}")
+    public ResponseEntity<String> getUserRole(@PathVariable(name = "uId") final UUID uId) {
+        return ResponseEntity.ok(userService.getRole(uId));
+    }
 }

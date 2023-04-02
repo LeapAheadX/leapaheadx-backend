@@ -37,6 +37,9 @@ public class Application {
     @Column(nullable = false)
     private Integer currentStepNo;
 
+    @Column(nullable = false)
+    private OffsetDateTime dueDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_for", nullable = false)
     private Vendor createdFor;
@@ -55,6 +58,10 @@ public class Application {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
+    @Column
+    private boolean isdisabled;
+
 
     public UUID getApplicationUuid() {
         return applicationUuid;
@@ -127,6 +134,22 @@ public class Application {
 
     public void setLastUpdated(final OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public OffsetDateTime getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(OffsetDateTime dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public boolean getDisabledStatus() {
+        return isdisabled;
+    }
+
+    public void setDisabledStatus(final boolean isdisabled) {
+        this.isdisabled = isdisabled;
     }
 
 }

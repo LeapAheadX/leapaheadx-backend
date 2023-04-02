@@ -9,18 +9,11 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin
 @RestController
-@RequestMapping(value = "/api/subformCanvass", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/subformcanvas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SubformCanvasController {
 
     private final SubformCanvasService subformCanvasService;
@@ -53,6 +46,13 @@ public class SubformCanvasController {
             @RequestBody @Valid final SubformCanvasDTO subformCanvasDTO) {
         subformCanvasService.update(canvasUuid, subformCanvasDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/archive/{canvasUuid}")
+    public ResponseEntity<Void> archiveSubForm(
+            @PathVariable(name = "canvasUuid") final UUID canvasUuid) {
+        subformCanvasService.archive(canvasUuid);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{canvasUuid}")
