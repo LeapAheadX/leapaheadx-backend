@@ -11,6 +11,7 @@ services:
     volumes:
       - ./mysql-data:/var/lib/mysql
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql
     ports:
       - 3306:3306
 
@@ -25,3 +26,14 @@ services:
       SPRING_DATASOURCE_PASSWORD: leap
     depends_on:
       - leapahead-db
+    volumes:
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql
+
+  population:
+    image: mysql:8.0
+    depends_on:
+      - leapahead-backend
+      - leapahead-db
+    command: [ "sh", "-c", "mysql -h leapahead-db -u leap -pleap < /docker-entrypoint-initdb.d/data_v2.sql" ]
+    volumes:
+      - ./sql/data_v2.sql:/docker-entrypoint-initdb.d/data_v2.sql

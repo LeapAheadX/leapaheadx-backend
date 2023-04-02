@@ -1,5 +1,12 @@
-FROM openjdk:17-jdk-slim
-ARG JAR_FILE=bin/leap-ahead-x-0.0.1-SNAPSHOT.jar
+FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /app
-COPY ${JAR_FILE} leap-ahead-x.jar
-ENTRYPOINT ["java", "-jar", "leap-ahead-x.jar"]
+COPY pom.xml .
+RUN mvn -B dependency:resolve dependency:resolve-plugins
+COPY src ./src
+RUN mvn -B package
+
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/bin/leap-ahead-x-0.0.1-SNAPSHOT.jar /app/leap-ahead-x.jar
+EXPOSE 8080
+CMD ["java", "-jar", "leap-ahead-x.jar"]
