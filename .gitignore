@@ -8,6 +8,7 @@ application-local.yml
 node_modules/
 node/
 
+
 ### STS ###
 .apt_generated
 .classpath

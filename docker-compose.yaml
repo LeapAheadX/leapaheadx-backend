@@ -3,6 +3,7 @@ services:
   leapahead-db:
     container_name: leapahead-db
     image: mysql:8.0
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: leap_ahead_x
@@ -20,6 +21,7 @@ services:
     image: leap-ahead-x
     ports:
       - "8080:8080"
+    restart: always
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://leapahead-db:3306/leap_ahead_x
       SPRING_DATASOURCE_USERNAME: leap
